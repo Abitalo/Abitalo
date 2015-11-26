@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:id="@+id/title"
+    android:layout_marginBottom="0dip"
+    android:layout_marginTop="0dip">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dip"
+        android:layout_marginTop="0dip" >
+
+        <LinearLayout
+            android:id="@+id/tab_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:onClick="bottom_onclick">
+
+            <ImageButton
+                android:clickable="false"
+                android:id="@+id/alarm_button"
+                android:layout_width="127dp"
+                android:layout_height="47dp"
+                android:src="@drawable/ri"
+                android:background="#d3cabb"
+              />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tab_mood"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:onClick="bottom_onclick">
+
+            <ImageButton
+                android:clickable="false"
+                android:id="@+id/mood_button"
+                android:layout_width="127dp"
+                android:layout_height="47dp"
+                android:background="#a99d8d"
+               />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/tab_diary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:onClick="bottom_onclick">
+
+            <ImageButton
+                android:clickable="false"
+                android:id="@+id/diary_button"
+                android:layout_width="127dp"
+                android:layout_height="47dp"
+                android:background="#a99d8d"
+               />
+        </LinearLayout>
+    </LinearLayout>
+    <ImageButton
+        android:clickable="false"
+        android:id="@+id/title_line"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#d3cabb"/>
+</LinearLayout>

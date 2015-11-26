@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NoteMe</string>
+
+    <string name="btn_bottom_1">闹钟</string>
+    <string name="btn_bottom_2">心情</string>
+    <string name="btn_bottom_3">日志</string>
+    <string name="btn_bottom_4">朋友</string>
+</resources>

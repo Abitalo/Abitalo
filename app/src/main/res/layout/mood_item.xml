@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    >
+    <TextView
+        android:id="@+id/mood_time"
+        android:layout_width="50dp"
+        android:layout_height="70dp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="6dp"
+        android:text="time"
+        android:textSize="10sp"/>
+
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/title"
+        android:layout_alignBottom="@id/title"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/mood_time"
+        android:src="@drawable/white_dot"
+        android:background="#00000000"
+        />
+
+    <TextView
+        android:id="@+id/mood_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@id/imageView1"
+        android:text="Hello World"
+
+        android:paddingLeft="28dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@drawable/mood_back"
+        android:textColor="#585149"
+        android:textSize="20sp"/>
+</RelativeLayout>
