@@ -1,0 +1,61 @@
+package com.abitalo.www.noteme.mood;
+
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+/**
+ * Created by asus on 2015/11/25.
+ */
+public class Item_Mood {
+    private static SimpleDateFormat form=null;
+    private Calendar date=null;
+    private String text=null;
+
+    public Item_Mood() {
+    }
+
+    public Item_Mood(String date, String text) {
+        form=new SimpleDateFormat("yyyyMMdd");
+        this.date = Calendar.getInstance();
+        try{
+            this.date.setTime(form.parse(date));
+        }catch(ParseException e){
+            Log.i("exception","error in parse date/init");
+        }
+        this.text = text;
+    }
+
+    public String getDateString() {
+        form=new SimpleDateFormat("yyyy-MM-dd");
+        return form.format(date.getTime());
+    }
+
+    public Calendar getDate(){
+        return date;
+    }
+
+    public void setDateString(String date) {
+        form=new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            this.date.setTime(form.parse(date));
+        }catch(ParseException e){
+            Log.i("exception","error in parse date/set");
+        }
+    }
+    public void setDate(Calendar date){
+        this.date=date;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+}
+

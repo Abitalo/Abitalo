@@ -12,6 +12,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
+import com.abitalo.www.noteme.alarm.*;
+import com.abitalo.www.noteme.diary.*;
+import com.abitalo.www.noteme.mood.*;
+
 public class Main extends Activity {//TODO : code optimization
     private static final int TAB_INDEX_ONE = 0;
     private static final int TAB_INDEX_TWO = 1;
@@ -49,7 +53,7 @@ public class Main extends Activity {//TODO : code optimization
                 switch (position) {
                     case TAB_INDEX_ONE: {
                         resetImage();
-                       // alarmImage.setImageResource(R.drawable.shi);
+                        // alarmImage.setImageResource(R.drawable.shi);
                         alarmImage.setImageAlpha(255);
                         alarmImage.setBackgroundColor(Color.parseColor("#d3cabb"));
                         titleLine.setBackgroundColor(Color.parseColor("#d3cabb"));
@@ -182,5 +186,4 @@ public class Main extends Activity {//TODO : code optimization
             return TAB_COUNT;
         }
     }
-
 }
