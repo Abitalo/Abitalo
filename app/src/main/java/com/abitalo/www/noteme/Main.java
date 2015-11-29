@@ -4,20 +4,23 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.abitalo.www.noteme.alarm.*;
-import com.abitalo.www.noteme.diary.*;
-import com.abitalo.www.noteme.mood.*;
+import com.abitalo.www.noteme.alarm.AlarmFragment;
+import com.abitalo.www.noteme.diary.DiaryFragment;
+import com.abitalo.www.noteme.mood.MoodFragment;
 
 public class Main extends Activity {//TODO : code optimization
     private static final int TAB_INDEX_ONE = 0;
@@ -41,8 +44,27 @@ public class Main extends Activity {//TODO : code optimization
         setContentView(R.layout.activity_main);
 
         init();
+        initDatabase();
         //setDefaultFragment();
         setViewPager();
+    }
+
+    private void initDatabase(){
+        DatabaseOpenHelper helper=new DatabaseOpenHelper(Main.this,"user.db");
+        SQLiteDatabase db=helper.getWritableDatabase();
+        Cursor cursor=db.rawQuery("select * from author", null);
+
+        if(null != cursor){
+            String[] columnNames= cursor.getColumnNames();
+            while(cursor.moveToNext()){
+                for(String name:columnNames){
+                    Log.i("info",name+" : "+cursor.getString(cursor.getColumnIndex(name)));
+                }
+            }
+            cursor.close();
+        }
+        db.close();
+        helper.close();
     }
 
     public void setViewPager() {
