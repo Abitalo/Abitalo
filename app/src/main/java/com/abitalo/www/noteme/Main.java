@@ -7,10 +7,13 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.abitalo.www.noteme.alarm.*;
 import com.abitalo.www.noteme.diary.*;
@@ -27,7 +30,7 @@ public class Main extends Activity {//TODO : code optimization
     private ImageButton alarmImage;
     private ImageButton moodImage;
     private ImageButton diaryImage;
-    private ImageButton titleLine;
+    private ImageView titleLine;
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
 
@@ -89,7 +92,7 @@ public class Main extends Activity {//TODO : code optimization
         alarmImage = (ImageButton) findViewById(R.id.alarm_button);
         moodImage = (ImageButton) findViewById(R.id.mood_button);
         diaryImage = (ImageButton) findViewById(R.id.diary_button);
-        titleLine = (ImageButton) findViewById(R.id.title_line);
+        titleLine = (ImageView) findViewById(R.id.title_line);
 
         alarmImage.setImageResource(R.drawable.shi);//设置图片
         alarmImage.setImageAlpha(255);

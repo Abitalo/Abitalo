@@ -73,7 +73,7 @@
                />
         </LinearLayout>
     </LinearLayout>
-    <ImageButton
+    <ImageView
         android:clickable="false"
         android:id="@+id/title_line"
         android:layout_width="match_parent"
