@@ -14,7 +14,6 @@
             android:background="#e7c2b9"
 
             />
-
     </AbsoluteLayout>
     <ListView
             android:id="@+id/mood_list"
@@ -34,5 +33,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:src="@drawable/mood_list"
+        android:onClick=""
         android:background="#00000000" />
 </RelativeLayout>

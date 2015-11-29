@@ -2,16 +2,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    
+    <TextView
+        android:id="@+id/tmp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
-    <com.abitalo.www.noteme.alarm.Clock
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_centerHorizontal="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/liner"
+        android:layout_below="@id/tmp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left"
+            android:background="#00000000"/>
+
+        <com.abitalo.www.noteme.alarm.Clock
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:id="@+id/clock" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right"
+            android:background="#00000000"/>
+    </LinearLayout>
+     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:gravity="center"
+        android:id="@+id/event_time"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:textColor="#a99d8d"
+        android:text="起始时间：12:50\n结束时间：13:30\n剩余时间：03:00\n"
+        android:layout_below="@id/liner"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|left"
+        android:includeFontPadding="false"
+        android:layout_margin="0dp"
+        android:id="@+id/event_text"
+        android:textSize="19sp"
+        android:text="A very very long sentence to test the textview's height, a big pig picks a bit of pins to pick pig. "
+        android:layout_below="@id/event_time"
+        android:background="@drawable/event_back"/>
+
     <ImageButton
         android:id="@+id/alarm_list"
         android:layout_width="wrap_content"

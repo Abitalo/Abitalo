@@ -1,14 +1,14 @@
-package com.abitalo.www.noteme;
+package com.abitalo.www.noteme.mood;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.abitalo.www.noteme.R;
+
 import java.util.List;
 
 /**
@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class EDateAdapter extends BaseAdapter {
     private Context context;
-    private List<DateText> list;
+    private List<Item_Mood> list;
 
-    public EDateAdapter(Context context, List<DateText> list) {
+    public EDateAdapter(Context context, List<Item_Mood> list) {
         this.context = context;
         this.list = list;
     }
@@ -58,8 +58,7 @@ public class EDateAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.date.setText(TimeFormat.format("yyyy.MM.dd",
-                        list.get(position).getDate()));
+        holder.date.setText(list.get(position).getDateString());
         holder.content.setText(list.get(position).getText());
         return convertView;
     }
