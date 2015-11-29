@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/left"
+            android:id="@+id/alarm_left"
             android:background="#00000000"/>
 
         <com.abitalo.www.noteme.alarm.Clock
@@ -30,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/right"
+            android:id="@+id/alarm_right"
             android:background="#00000000"/>
     </LinearLayout>
      <TextView
@@ -41,18 +43,19 @@
         android:layout_centerHorizontal="true"
         android:textSize="16sp"
         android:textColor="#a99d8d"
-        android:text="起始时间：12:50\n结束时间：13:30\n剩余时间：03:00\n"
+        android:text=""
         android:layout_below="@id/liner"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|left"
+        android:gravity="center"
         android:includeFontPadding="false"
         android:layout_margin="0dp"
         android:id="@+id/event_text"
         android:textSize="19sp"
-        android:text="A very very long sentence to test the textview's height, a big pig picks a bit of pins to pick pig. "
+        android:layout_centerHorizontal="true"
+        android:text=""
         android:layout_below="@id/event_time"
         android:background="@drawable/event_back"/>
 
