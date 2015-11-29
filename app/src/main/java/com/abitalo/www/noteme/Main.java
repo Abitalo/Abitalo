@@ -4,17 +4,21 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import com.abitalo.www.noteme.alarm.*;
-import com.abitalo.www.noteme.diary.*;
-import com.abitalo.www.noteme.mood.*;
+import com.abitalo.www.noteme.alarm.AlarmFragment;
+import com.abitalo.www.noteme.diary.DiaryFragment;
+import com.abitalo.www.noteme.mood.MoodFragment;
 
 public class Main extends Activity {//TODO : code optimization
     private static final int TAB_INDEX_ONE = 0;
@@ -27,7 +31,7 @@ public class Main extends Activity {//TODO : code optimization
     private ImageButton alarmImage;
     private ImageButton moodImage;
     private ImageButton diaryImage;
-    private ImageButton titleLine;
+    private ImageView titleLine;
     private ViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
 
@@ -38,8 +42,27 @@ public class Main extends Activity {//TODO : code optimization
         setContentView(R.layout.activity_main);
 
         init();
+        initDatabase();
         //setDefaultFragment();
         setViewPager();
+    }
+
+    private void initDatabase(){
+        DatabaseOpenHelper helper=new DatabaseOpenHelper(Main.this,"user.db");
+        SQLiteDatabase db=helper.getWritableDatabase();
+        Cursor cursor=db.rawQuery("select * from author", null);
+
+        if(null != cursor){
+            String[] columnNames= cursor.getColumnNames();
+            while(cursor.moveToNext()){
+                for(String name:columnNames){
+                    Log.i("info",name+" : "+cursor.getString(cursor.getColumnIndex(name)));
+                }
+            }
+            cursor.close();
+        }
+        db.close();
+        helper.close();
     }
 
     public void setViewPager() {
@@ -89,7 +112,7 @@ public class Main extends Activity {//TODO : code optimization
         alarmImage = (ImageButton) findViewById(R.id.alarm_button);
         moodImage = (ImageButton) findViewById(R.id.mood_button);
         diaryImage = (ImageButton) findViewById(R.id.diary_button);
-        titleLine = (ImageButton) findViewById(R.id.title_line);
+        titleLine = (ImageView) findViewById(R.id.title_line);
 
         alarmImage.setImageResource(R.drawable.shi);//设置图片
         alarmImage.setImageAlpha(255);
