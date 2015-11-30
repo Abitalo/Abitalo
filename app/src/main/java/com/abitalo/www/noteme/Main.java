@@ -6,9 +6,12 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -39,7 +42,6 @@ public class Main extends Activity {//TODO : code optimization
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-
         init();
         //setDefaultFragment();
         setViewPager();
@@ -67,19 +69,19 @@ public class Main extends Activity {//TODO : code optimization
                     case TAB_INDEX_TWO: {
                         resetImage();
                         moodImage.setImageAlpha(255);
-                        alarmImage.setBackgroundColor(Color.parseColor("#bbdfdb"));
-                        moodImage.setBackgroundColor(Color.parseColor("#f6938d"));
-                        titleLine.setBackgroundColor(Color.parseColor("#f6938d"));
-                        diaryImage.setBackgroundColor(Color.parseColor("#bbdfdb"));
+                        alarmImage.setBackgroundColor(Color.parseColor("#a99d8d"));
+                        moodImage.setBackgroundColor(Color.parseColor("#d3cabb"));
+                        titleLine.setBackgroundColor(Color.parseColor("#d3cabb"));
+                        diaryImage.setBackgroundColor(Color.parseColor("#a99d8d"));
                         break;
                     }
                     case TAB_INDEX_THREE: {
                         resetImage();
                         diaryImage.setImageAlpha(255);
-                        alarmImage.setBackgroundColor(Color.parseColor("#ebe6b9"));
-                        moodImage.setBackgroundColor(Color.parseColor("#ebe6b9"));
-                        titleLine.setBackgroundColor(Color.parseColor("#e0bd95"));
-                        diaryImage.setBackgroundColor(Color.parseColor("#e0bd95"));
+                        alarmImage.setBackgroundColor(Color.parseColor("#a99d8d"));
+                        moodImage.setBackgroundColor(Color.parseColor("#a99d8d"));
+                        titleLine.setBackgroundColor(Color.parseColor("#d3cabb"));
+                        diaryImage.setBackgroundColor(Color.parseColor("#d3cabb"));
                         break;
                     }
                 }
@@ -128,20 +130,20 @@ public class Main extends Activity {//TODO : code optimization
                 mViewPager.setCurrentItem(1);
                 resetImage();
                 moodImage.setImageAlpha(255);
-                alarmImage.setBackgroundColor(Color.parseColor("#bbdfdb"));
-                moodImage.setBackgroundColor(Color.parseColor("#f6938d"));
-                titleLine.setBackgroundColor(Color.parseColor("#f6938d"));
-                diaryImage.setBackgroundColor(Color.parseColor("#bbdfdb"));
+                alarmImage.setBackgroundColor(Color.parseColor("#a99d8d"));
+                moodImage.setBackgroundColor(Color.parseColor("#d3cabb"));
+                titleLine.setBackgroundColor(Color.parseColor("#d3cabb"));
+                diaryImage.setBackgroundColor(Color.parseColor("#a99d8d"));
                 break;
             }
             case R.id.tab_diary: {
                 mViewPager.setCurrentItem(2);
                 resetImage();
                 diaryImage.setImageAlpha(255);
-                alarmImage.setBackgroundColor(Color.parseColor("#ebe6b9"));
-                moodImage.setBackgroundColor(Color.parseColor("#ebe6b9"));
-                titleLine.setBackgroundColor(Color.parseColor("#e0bd95"));
-                diaryImage.setBackgroundColor(Color.parseColor("#e0bd95"));
+                alarmImage.setBackgroundColor(Color.parseColor("#a99d8d"));
+                moodImage.setBackgroundColor(Color.parseColor("#a99d8d"));
+                titleLine.setBackgroundColor(Color.parseColor("#d3cabb"));
+                diaryImage.setBackgroundColor(Color.parseColor("#d3cabb"));
                 break;
             }
         }

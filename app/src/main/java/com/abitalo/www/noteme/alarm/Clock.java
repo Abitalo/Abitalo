@@ -11,10 +11,12 @@ import android.os.Handler;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.abitalo.www.noteme.R;
+import com.abitalo.www.noteme.Varible;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -67,7 +69,6 @@ public class Clock extends View {
 
     Calendar eventStartTime;
     Calendar eventTerminalTime;
-    private String sTimeZoneString;
 
 
     public Clock(Context context, AttributeSet attr) {
@@ -117,20 +118,7 @@ public class Clock extends View {
 
         mPaint = new Paint();
         mPaint.setColor(Color.BLUE);
-        run();
     }
-
-    protected void run() {
-        tickHandler = new Handler();
-        tickHandler.post(tickRunnable);
-    }
-
-    private Runnable tickRunnable = new Runnable() {
-        public void run() {
-            postInvalidate();
-            tickHandler.postDelayed(tickRunnable, 1000);
-        }
-    };
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -153,7 +141,6 @@ public class Clock extends View {
         bmdDial.setBounds(centerX - (mWidth / 2), centerY - (mHeigh / 2),
                 centerX + (mWidth / 2), centerY + (mHeigh / 2));
         bmdDial.draw(canvas);
-
         //换算单位
         final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
         int pixel = (int)(SP_VALUE * fontScale + 0.5f);
@@ -263,4 +250,5 @@ public class Clock extends View {
         eventMinute=Integer.parseInt(itemAlarm.getStartTimeMinute());
         postInvalidate();
     }
+
 }
