@@ -1,27 +1,22 @@
 package com.abitalo.www.noteme.alarm;
 
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
-import com.abitalo.www.noteme.mood.Item_Mood;
-
-import org.w3c.dom.Text;
+import com.abitalo.www.noteme.Varible;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 /**
  * Created by Lancelot on 2015/9/27.
@@ -34,17 +29,45 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     private TextView eventContent;
     private TextView eventTime;
 
-    private Clock clock;
+    public Clock clock;
     private ArrayList<Item_Alarm> data;
     private View view;
     private Item_Alarm currentItem;
+    private Main mActivity;
+    private Handler tickHandler ;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        tickHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case Varible.VALIDATE_CLOCK:{
+                        clock.postInvalidate();
+                    }
+                }
+            }
+        };
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alarm,container,false);
         init(view);
+        tickHandler.post(tickRunnable);
         return view;
     }
 
+    private Runnable tickRunnable = new Runnable() {
+        public void run() {
+            Message msg = new Message();
+            msg.what = Varible.VALIDATE_CLOCK;
+            tickHandler.sendMessage(msg);
+            tickHandler.postDelayed(tickRunnable, 1000);
+        }
+    };
 
     private void init(View view){
         data = new ArrayList<Item_Alarm>();
@@ -76,6 +99,15 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                     clock.setEventTime(currentItem);
                     setEvent(currentItem);
                     setTime(currentItem);
+                    if(data.size()-1 == id){
+                        right.setImageResource(R.drawable.right_button_selected);
+                        right.setClickable(true);
+                    }
+                    id--;
+                }
+                if(0 == id){
+                    left.setImageResource(R.drawable.btn_unclk_left);
+                    left.setClickable(false);
                 }
                 break;
             }
@@ -85,6 +117,15 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                     clock.setEventTime(currentItem);
                     setEvent(currentItem);
                     setTime(currentItem);
+                    if(0 == id){
+                        left.setImageResource(R.drawable.left_button_selected);
+                        left.setClickable(true);
+                    }
+                    id++;
+                }
+                if(data.size()-1 == id){
+                    right.setImageResource(R.drawable.btn_unclk_right);
+                    right.setClickable(false);
                 }
                 break;
             }
@@ -128,4 +169,8 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }
