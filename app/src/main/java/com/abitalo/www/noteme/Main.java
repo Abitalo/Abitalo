@@ -9,20 +9,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.abitalo.www.noteme.alarm.AlarmFragment;
 import com.abitalo.www.noteme.diary.DiaryFragment;
+import com.abitalo.www.noteme.mood.Item_Mood;
+import com.abitalo.www.noteme.mood.MoodEditorDialog;
 import com.abitalo.www.noteme.mood.MoodFragment;
 
-public class Main extends Activity {//TODO : code optimization
+public class Main extends Activity implements MoodEditorDialog.MoodEditListener{//TODO : code optimization
     private static final int TAB_INDEX_ONE = 0;
     private static final int TAB_INDEX_TWO = 1;
     private static final int TAB_INDEX_THREE = 2;
@@ -174,6 +174,11 @@ public class Main extends Activity {//TODO : code optimization
         alarmImage.setImageAlpha(100);
         moodImage.setImageAlpha(100);
         diaryImage.setImageAlpha(100);
+    }
+
+    @Override
+    public void moodEditComplete(Item_Mood newItem) {
+        moodFragment.update(newItem);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

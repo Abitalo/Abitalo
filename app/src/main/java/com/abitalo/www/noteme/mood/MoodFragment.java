@@ -18,8 +18,9 @@ import java.util.List;
 /**
  * Created by Lancelot on 2015/9/27.
  */
-public class MoodFragment extends Fragment {
-
+public class MoodFragment extends Fragment implements MoodEditorDialog.MoodEditListener{
+    ImageButton add_btn;
+    Item_Mood convert=null;
     // 时间轴列表
     private ListView listView;
     // 数据list
@@ -36,7 +37,7 @@ public class MoodFragment extends Fragment {
 
     private void initMoodList(View view){
         listView = (ListView)view.findViewById(R.id.mood_list);
-        listView.bringToFront();
+//        listView.bringToFront();
         data = new ArrayList<Item_Mood>();
         addData();
         Collections.sort(data, new Comparator<Item_Mood>() {
@@ -64,17 +65,35 @@ public class MoodFragment extends Fragment {
         data.add(date4);
     }
 
+    public void update(Item_Mood newItem) {
+        data.add(newItem);
+        Collections.sort(data, new Comparator<Item_Mood>() {
+            @Override
+            public int compare(Item_Mood lhs, Item_Mood rhs) {
+                return rhs.getDate().compareTo(lhs.getDate());
+            }
+        });
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ImageButton add_btn=(ImageButton)getActivity().findViewById(R.id.mood_menu);
-        add_btn.bringToFront();
+
+        add_btn=(ImageButton)getActivity().findViewById(R.id.mood_menu);
+//        add_btn.bringToFront();
         add_btn.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MoodEditorDialog moodEditorDialog = new MoodEditorDialog(MoodFragment.this.getActivity());
-                moodEditorDialog.show();
+                MoodEditorDialog moodEditorDialog = new MoodEditorDialog();
+                moodEditorDialog.show(getFragmentManager(), getTag());
             }
         });
+    }
+
+    @Override
+    public void moodEditComplete(Item_Mood newItem){
+        data.add(newItem);
+        adapter.notifyDataSetChanged();
     }
 }
