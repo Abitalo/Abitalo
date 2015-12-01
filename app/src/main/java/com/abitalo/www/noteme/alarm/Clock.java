@@ -70,7 +70,6 @@ public class Clock extends View {
     Calendar eventStartTime;
     Calendar eventTerminalTime;
 
-
     public Clock(Context context, AttributeSet attr) {
         super(context,attr);
 
@@ -92,7 +91,7 @@ public class Clock extends View {
         mBmpDial = BitmapFactory.decodeResource(getResources(),
                 R.drawable.clock);
         bmdDial = new BitmapDrawable(context.getResources(),mBmpDial);
-
+       // bmdDial.setAlpha(225);
         mBmpBlueHour = BitmapFactory.decodeResource(getResources(),
                 R.drawable.bline);
         bmdBlueHour = new BitmapDrawable(context.getResources(),mBmpBlueHour);
@@ -248,6 +247,11 @@ public class Clock extends View {
         eventTerminalTime = itemAlarm.getTerminalTime();
         eventHour=Integer.parseInt(itemAlarm.getStartTimeHour());
         eventMinute=Integer.parseInt(itemAlarm.getStartTimeMinute());
+        postInvalidate();
+    }
+
+    public void setDialAlpha(int value){
+        bmdDial.setAlpha(value);
         postInvalidate();
     }
 

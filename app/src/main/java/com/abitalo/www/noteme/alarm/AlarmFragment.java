@@ -1,14 +1,21 @@
 package com.abitalo.www.noteme.alarm;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
@@ -32,10 +39,13 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     public Clock clock;
     private ArrayList<Item_Alarm> data;
     private View view;
+    //当前显示的item
     private Item_Alarm currentItem;
-    private Main mActivity;
+    //当数据为0时，显示的提醒item
+    private Item_Alarm initItem;
     private Handler tickHandler ;
-
+    private boolean hasData;
+    AlertDialog myDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +60,9 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                 }
             }
         };
+//        Log.v("logcat","zela Create" );
+        //设置提醒item
+        initItem = new Item_Alarm("00:00","00:00","做个计划吧！");
     }
 
     @Override
@@ -76,38 +89,40 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         clock = (Clock) view.findViewById(R.id.clock);
         eventContent = (TextView) view.findViewById(R.id.event_text);
         eventTime = (TextView) view.findViewById(R.id.event_time);
-
+        //hasData默认为false
+        hasData = false;
+        //添加假数据
         addFakeData();
         DateComparator comparator = new DateComparator();
         Collections.sort(data, comparator);
-        currentItem = data.get(0);
-        setClock(currentItem);
-        setEvent(currentItem);
-        setTime(currentItem);
-
+        if(hasData){
+            currentItem = data.get(0);
+            setClock(currentItem);
+            setEvent(currentItem);
+            setTime(currentItem);
+        }
+        else {
+            setClock(initItem);
+            setEvent(initItem);
+            setTime(initItem);
+        }
+        //记得每次设定事件后要调用该函数，修改左右按钮的状态以及hasData状态
+        changeButtonState();
         left.setOnClickListener(this);
         right.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v){
+        if(!hasData) return;
         int id=data.indexOf(currentItem);
         switch (v.getId()){
             case R.id.alarm_left:{
-                if(id>0){
-                    currentItem = data.get(id-1);
+                if(id>0) {
+                    currentItem = data.get(id - 1);
                     clock.setEventTime(currentItem);
                     setEvent(currentItem);
                     setTime(currentItem);
-                    if(data.size()-1 == id){
-                        right.setImageResource(R.drawable.right_button_selected);
-                        right.setClickable(true);
-                    }
-                    id--;
-                }
-                if(0 == id){
-                    left.setImageResource(R.drawable.btn_unclk_left);
-                    left.setClickable(false);
                 }
                 break;
             }
@@ -117,23 +132,108 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                     clock.setEventTime(currentItem);
                     setEvent(currentItem);
                     setTime(currentItem);
-                    if(0 == id){
-                        left.setImageResource(R.drawable.left_button_selected);
-                        left.setClickable(true);
-                    }
-                    id++;
-                }
-                if(data.size()-1 == id){
-                    right.setImageResource(R.drawable.btn_unclk_right);
-                    right.setClickable(false);
                 }
                 break;
             }
         }
+        changeButtonState();
     }
 
     private  void setClock(Item_Alarm itemAlarm){
         clock.setEventTime(itemAlarm);
+        clock.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        clock.setDialAlpha(235);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        clock.setDialAlpha(255);
+                        break;
+                }
+                return false;
+            }
+        });
+        clock.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //Toast.makeText(getActivity(), "OnLongClickListener事件", Toast.LENGTH_SHORT).show();
+                if(!hasData)
+                    return  true;
+                myDialog = new AlertDialog.Builder(getActivity()).create();
+                myDialog.show();
+                myDialog.getWindow().setContentView(R.layout.alarm_dialog);
+                myDialog.getWindow()
+                        .findViewById(R.id.positiveButton)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int id = data.indexOf(currentItem);
+                                if(id+1<data.size()){
+                                    Item_Alarm tmp = data.get(id+1);
+                                    data.remove(currentItem);
+                                    currentItem = tmp;
+                                    setTime(currentItem);
+                                    clock.setEventTime(currentItem);
+                                    setEvent(currentItem);
+                                }
+                                else if(id-1>=0){
+                                    Item_Alarm tmp = data.get(id-1);
+                                    data.remove(currentItem);
+                                    currentItem=tmp;
+                                    setTime(currentItem);
+                                    clock.setEventTime(currentItem);
+                                    setEvent(currentItem);
+                                }
+                                else{
+                                    data.remove(currentItem);
+                                    currentItem = null;
+                                    setTime(initItem);
+                                    clock.setEventTime(initItem);
+                                    setEvent(initItem);
+                                }
+                                changeButtonState();
+                                myDialog.dismiss();
+                            }
+                        });
+                myDialog.getWindow()
+                        .findViewById(R.id.negativeButton)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                myDialog.dismiss();
+                            }
+                        });
+                clock.setDialAlpha(255);
+                return true;
+            }
+        });
+    }
+
+    private  void changeButtonState(){
+        if(0 == data.size()) hasData = false;
+        else hasData = true;
+        if(!hasData || data.size() == 1){
+            left.setImageResource(R.drawable.btn_unclk_left);
+            left.setClickable(false);
+            right.setImageResource(R.drawable.btn_unclk_right);
+            right.setClickable(false);
+        }
+        else{
+            right.setImageResource(R.drawable.right_button_selected);
+            right.setClickable(true);
+            left.setImageResource(R.drawable.left_button_selected);
+            left.setClickable(true);
+            if(data.indexOf(currentItem) == 0){
+                left.setImageResource(R.drawable.btn_unclk_left);
+                left.setClickable(false);
+            }
+            else if(data.indexOf(currentItem) == data.size()-1){
+                right.setImageResource(R.drawable.btn_unclk_right);
+                right.setClickable(false);
+            }
+        }
     }
 
     private void setEvent(Item_Alarm itemAlarm){
@@ -148,7 +248,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         Item_Alarm itemAlarm = new Item_Alarm();
         itemAlarm.setStartTimeString("13:12");
         itemAlarm.setTerminalTimeString("13:42");
-        itemAlarm.setText("吃饭");
+        itemAlarm.setText("吃饭、睡觉、打豆豆、学习、洗澡、洗漱、巴拉拉能量、仙朵拉、魔法鞋、古娜拉黑暗之神、沙罗沙罗、黑魔旋风。");
         data.add(itemAlarm);
         itemAlarm = new Item_Alarm();
         itemAlarm.setStartTimeString("16:30");
@@ -160,6 +260,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         itemAlarm.setTerminalTimeString("23:00");
         itemAlarm.setText("洗漱");
         data.add(itemAlarm);
+        hasData=true;
     }
     private class DateComparator implements Comparator<Item_Alarm> {
 
@@ -170,7 +271,10 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
+//        do not forget call removeCallbacks
+        tickHandler.removeCallbacks(tickRunnable);
+//        Log.v("logcat", "zela Destory");
     }
 }
