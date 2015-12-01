@@ -14,7 +14,9 @@ public class Item_Mood {
     private Calendar date=null;
     private String text=null;
 
-    public Item_Mood() {
+    public Item_Mood(Calendar date,String text) {
+        this.date=date;
+        this.text=text;
     }
 
     public Item_Mood(String date, String text) {
@@ -29,7 +31,7 @@ public class Item_Mood {
     }
 
     public String getDateString() {
-        form=new SimpleDateFormat("yyyy-MM-dd");
+        form=new SimpleDateFormat("yyyy.MM.dd");
         return form.format(date.getTime());
     }
 
@@ -37,25 +39,8 @@ public class Item_Mood {
         return date;
     }
 
-    public void setDateString(String date) {
-        form=new SimpleDateFormat("yyyy-MM-dd");
-        try{
-            this.date.setTime(form.parse(date));
-        }catch(ParseException e){
-            Log.i("exception","error in parse date/set");
-        }
-    }
-    public void setDate(Calendar date){
-        this.date=date;
-    }
-
     public String getText() {
         return text;
     }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
 }
 

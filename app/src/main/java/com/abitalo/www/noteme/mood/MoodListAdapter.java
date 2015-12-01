@@ -12,13 +12,16 @@ import com.abitalo.www.noteme.R;
 import java.util.List;
 
 /**
- * Created by asus on 2015/11/25.
+ *  Created by zela on 2015/11/25.
+ *
+ *  Contaning a list<Item_mood>
+ *  used for list_view in fragment_mood
  */
-public class EDateAdapter extends BaseAdapter {
+public class MoodListAdapter extends BaseAdapter {
     private Context context;
     private List<Item_Mood> list;
 
-    public EDateAdapter(Context context, List<Item_Mood> list) {
+    public MoodListAdapter(Context context, List<Item_Mood> list) {
         this.context = context;
         this.list = list;
     }
