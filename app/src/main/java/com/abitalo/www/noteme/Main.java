@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.abitalo.www.noteme.alarm.*;
 import com.abitalo.www.noteme.diary.*;
