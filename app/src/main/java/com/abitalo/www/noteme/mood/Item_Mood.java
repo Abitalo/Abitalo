@@ -31,7 +31,7 @@ public class Item_Mood {
     }
 
     public String getDateString() {
-        form=new SimpleDateFormat("yyyy.MM.dd");
+        form=new SimpleDateFormat("yyyy-MM-dd");
         return form.format(date.getTime());
     }
 
@@ -39,8 +39,25 @@ public class Item_Mood {
         return date;
     }
 
+    public void setDateString(String date) {
+        form=new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            this.date.setTime(form.parse(date));
+        }catch(ParseException e){
+            Log.i("exception","error in parse date/set");
+        }
+    }
+    public void setDate(Calendar date){
+        this.date=date;
+    }
+
     public String getText() {
         return text;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
 }
 
