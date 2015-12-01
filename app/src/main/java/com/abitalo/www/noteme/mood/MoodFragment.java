@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class MoodFragment extends Fragment implements MoodEditorDialog.MoodEditListener{
     ImageButton add_btn;
-    Item_Mood convert=null;
     // 时间轴列表
     private ListView listView;
     // 数据list

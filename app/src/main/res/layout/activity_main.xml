@@ -8,11 +8,11 @@
         layout="@layout/titile_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bottom_bar"/>
+        android:id="@+id/title_bar"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
-        android:layout_below="@id/bottom_bar"
+        android:layout_below="@id/title_bar"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"/>
 
