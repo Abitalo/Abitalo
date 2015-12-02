@@ -1,6 +1,6 @@
 package com.abitalo.www.noteme.mood;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.abitalo.www.noteme.R;
+import com.tekinarslan.material.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,8 @@ import java.util.List;
  * Created by Lancelot on 2015/9/27.
  */
 public class MoodFragment extends Fragment implements MoodEditorDialog.MoodEditListener{
-    ImageButton add_btn;
+    FloatingActionButton add_btn;
+
     Item_Mood convert=null;
     // 时间轴列表
     private ListView listView;
@@ -80,13 +82,15 @@ public class MoodFragment extends Fragment implements MoodEditorDialog.MoodEditL
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        add_btn=(ImageButton)getActivity().findViewById(R.id.mood_menu);
+        add_btn=(FloatingActionButton)getActivity().findViewById(R.id.mood_add_btn);
+        add_btn.setDrawableIcon(getResources().getDrawable(R.drawable.plus));
 //        add_btn.bringToFront();
         add_btn.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MoodEditorDialog moodEditorDialog = new MoodEditorDialog();
-                moodEditorDialog.show(getFragmentManager(), getTag());
+                moodEditorDialog.show(getFragmentManager(),getTag());
+
             }
         });
     }
