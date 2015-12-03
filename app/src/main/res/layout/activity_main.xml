@@ -31,6 +31,6 @@
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="#d5f5e8"/>
+        android:background="#f3f3f3"/>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
