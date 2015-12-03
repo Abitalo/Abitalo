@@ -14,7 +14,9 @@ public class Item_Mood {
     private Calendar date=null;
     private String text=null;
 
-    public Item_Mood() {
+    public Item_Mood(Calendar date,String text) {
+        this.date=date;
+        this.text=text;
     }
 
     public Item_Mood(String date, String text) {
