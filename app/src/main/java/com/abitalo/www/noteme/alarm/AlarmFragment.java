@@ -1,18 +1,9 @@
 package com.abitalo.www.noteme.alarm;
 import android.app.AlertDialog;
-<<<<<<< HEAD
-import android.app.Fragment;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Vibrator;
-=======
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
->>>>>>> origin/master
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,12 +14,7 @@ import android.widget.Toast;
 
 import com.abitalo.www.noteme.R;
 import com.abitalo.www.noteme.Varible;
-<<<<<<< HEAD
-import com.sleepbot.datetimepicker.time.RadialPickerLayout;
-import com.sleepbot.datetimepicker.time.TimePickerDialog;
-=======
 import com.tekinarslan.material.FloatingActionButton;
->>>>>>> origin/master
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,13 +23,8 @@ import java.util.Comparator;
 /**
  * Created by Lancelot on 2015/9/27.
  */
-<<<<<<< HEAD
-public class AlarmFragment extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener {
-    private ImageButton list;
-=======
 public class AlarmFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton add_btn;
->>>>>>> origin/master
     private ImageButton left;
     private ImageButton right;
 
@@ -59,11 +40,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     private Item_Alarm initItem;
     private Handler tickHandler ;
     private boolean hasData;
-    private ImageButton addButton;
     AlertDialog myDialog;
-    Vibrator vibrator;
-    long[] vibrateTime = {0,200};
-    public static final String TIMEPICKER_TAG = "timepicker";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +58,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
 //        Log.v("logcat","zela Create" );
         //设置提醒item
         initItem = new Item_Alarm("00:00","00:00","做个计划吧！");
-        vibrator = (Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -108,7 +84,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         clock = (Clock) view.findViewById(R.id.clock);
         eventContent = (TextView) view.findViewById(R.id.event_text);
         eventTime = (TextView) view.findViewById(R.id.event_time);
-        addButton = (ImageButton) view.findViewById(R.id.btn_add_alarm);
         //hasData默认为false
         hasData = false;
         //添加假数据
@@ -128,23 +103,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         }
         //记得每次设定事件后要调用该函数，修改左右按钮的状态以及hasData状态
         changeButtonState();
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(ClickUtil.isFastDoubleClick())
-                    return;
-//                TimePickerDialog tpd = new TimePickerDialog();
-//                    tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
-//                        @Override
-//                        public void onTimeSet(RadialPickerLayout radialPickerLayout, int i, int i1) {
-//                            Toast.makeText(getActivity(), "new time:" + i + "-" + i1, Toast.LENGTH_LONG).show();
-//                        }
-//                    });
-//                tpd.setShowsDialog(true);
-                Toast.makeText(getActivity(), "nddasdsadasdasdasdasdasdsadasdas", Toast.LENGTH_SHORT).show();
-            }
-        });
         left.setOnClickListener(this);
         right.setOnClickListener(this);
     }
@@ -198,7 +156,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                 //Toast.makeText(getActivity(), "OnLongClickListener事件", Toast.LENGTH_SHORT).show();
                 if(!hasData)
                     return  true;
-                vibrator.vibrate(vibrateTime,-1);
                 myDialog = new AlertDialog.Builder(getActivity()).create();
                 myDialog.show();
                 myDialog.getWindow().setContentView(R.layout.alarm_dialog);
@@ -309,11 +266,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-<<<<<<< HEAD
-    public void onDestroyView() {
-        super.onDestroyView();
-        vibrator.cancel();
-=======
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -326,7 +278,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
             }
         });
 
->>>>>>> origin/master
     }
 
     @Override
@@ -336,25 +287,4 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         tickHandler.removeCallbacks(tickRunnable);
 //        Log.v("logcat", "zela Destory");
     }
-
-    @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-        Toast.makeText(getActivity(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
-    }
 }
-//    public void showIntentActivityNotify(){
-//        // Notification.FLAG_ONGOING_EVENT --设置常驻 Flag;Notification.FLAG_AUTO_CANCEL 通知栏上点击此通知后自动清除此通知
-////		notification.flags = Notification.FLAG_AUTO_CANCEL; //在通知栏上点击此通知后自动清除此通知
-//        mBuilder.setAutoCancel(true)//点击后让通知将消失
-//                .setContentTitle("测试标题")
-//                .setContentText("点击跳转")
-//                .setTicker("点我")
-//                .setPriority(Notification.PRIORITY_MAX)
-//                .setDefaults(Notification.DEFAULT_ALL );
-//        //点击的意图ACTION是跳转到Intent
-//        Intent resultIntent = new Intent(this, MainActivity.class);
-//        resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        mBuilder.setContentIntent(pendingIntent);
-//        mNotificationManager.notify(notifyId, mBuilder.build());
-//    }

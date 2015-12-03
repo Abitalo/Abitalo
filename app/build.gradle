@@ -27,9 +27,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:support-v13:22.1.1'
     compile 'com.android.support:design:22.2.0'
-<<<<<<< HEAD
-    compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
-=======
     compile 'com.android.support:cardview-v7:23.1.0'
->>>>>>> origin/master
 }
