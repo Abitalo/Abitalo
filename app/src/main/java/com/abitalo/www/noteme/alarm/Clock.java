@@ -11,22 +11,18 @@ import android.os.Handler;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.abitalo.www.noteme.R;
-import com.abitalo.www.noteme.Varible;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 /**
  * Created by asus on 2015/11/26.
  */
 public class Clock extends View {
     //时钟上时间文字的大小（dp)
-    int SP_VALUE = 16;
+    int SP_VALUE = 12;
 
     //文字颜色Red
     String RED_TEXT="#f57b7b";
@@ -39,14 +35,14 @@ public class Clock extends View {
     Bitmap mBmpDial;
     Bitmap mBmpHour;
     Bitmap mBmpMinute;
-    Bitmap mBmpSecond;
+//    Bitmap mBmpSecond;
     Bitmap mBmpBlueHour;
     Bitmap mBmpBlueMinute;
 
     BitmapDrawable bmdHour;
     BitmapDrawable bmdMinute;
     BitmapDrawable bmdDial;
-    BitmapDrawable bmdSecond;
+//    BitmapDrawable bmdSecond;
     BitmapDrawable bmdBlueHour;
     BitmapDrawable bmdBlueMinute;
 
@@ -77,27 +73,27 @@ public class Clock extends View {
         eventTerminalTime = Calendar.getInstance();
 
         mBmpHour = BitmapFactory.decodeResource(getResources(),
-                R.drawable.rline);
+                R.drawable.hour_current);
         bmdHour = new BitmapDrawable(context.getResources(),mBmpHour);
 
         mBmpMinute = BitmapFactory.decodeResource(getResources(),
-                R.drawable.rmin);
+                R.drawable.min_current);
         bmdMinute = new BitmapDrawable(context.getResources(),mBmpMinute);
 
-        mBmpSecond = BitmapFactory.decodeResource(getResources(),
-                R.drawable.rsecond);
-        bmdSecond = new BitmapDrawable(getResources(),mBmpSecond);
+//        mBmpSecond = BitmapFactory.decodeResource(getResources(),
+//                R.drawable.rline);
+//        bmdSecond = new BitmapDrawable(getResources(),mBmpSecond);
 
         mBmpDial = BitmapFactory.decodeResource(getResources(),
                 R.drawable.clock);
         bmdDial = new BitmapDrawable(context.getResources(),mBmpDial);
        // bmdDial.setAlpha(225);
         mBmpBlueHour = BitmapFactory.decodeResource(getResources(),
-                R.drawable.bline);
+                R.drawable.hour_des);
         bmdBlueHour = new BitmapDrawable(context.getResources(),mBmpBlueHour);
 
         mBmpBlueMinute = BitmapFactory.decodeResource(getResources(),
-                R.drawable.bmin);
+                R.drawable.min_des);
         bmdBlueMinute = new BitmapDrawable(context.getResources(),mBmpBlueMinute);
 
         mWidth = mBmpDial.getWidth();
@@ -137,14 +133,13 @@ public class Clock extends View {
         canvas.save();
         canvas.scale(scale, scale, centerX, centerY);
 
-        bmdDial.setBounds(centerX - (mWidth / 2), centerY - (mHeigh / 2),
-                centerX + (mWidth / 2), centerY + (mHeigh / 2));
-        bmdDial.draw(canvas);
+//        bmdDial.setBounds(centerX - (mWidth / 2), centerY - (mHeigh / 2),
+//                centerX + (mWidth / 2), centerY + (mHeigh / 2));
+//        bmdDial.draw(canvas);
         //换算单位
         final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
         int pixel = (int)(SP_VALUE * fontScale + 0.5f);
         mTextPaint.setTextSize(pixel);
-
         //比较时间
         //1.未开始统计还有多少时间
         if(eventHour > cal.get(Calendar.HOUR_OF_DAY) ||
@@ -204,16 +199,16 @@ public class Clock extends View {
 
         canvas.restore();
 
-        mTempWidth = bmdSecond.getIntrinsicWidth();
-        mTempHeigh = bmdSecond.getIntrinsicHeight();
-        canvas.save();
-        canvas.rotate(secondRotate, centerX, centerY);
-        bmdSecond.setBounds(centerX - (mTempWidth / 2), centerY
-                - (mTempHeigh / 2), centerX + (mTempWidth / 2), centerY
-                + (mTempHeigh / 2));
-        bmdSecond.draw(canvas);
-
-        canvas.restore();
+//        mTempWidth = bmdSecond.getIntrinsicWidth();
+//        mTempHeigh = bmdSecond.getIntrinsicHeight();
+//        canvas.save();
+//        canvas.rotate(secondRotate, centerX, centerY);
+//        bmdSecond.setBounds(centerX - (mTempWidth / 2), centerY
+//                - (mTempHeigh / 2), centerX + (mTempWidth / 2), centerY
+//                + (mTempHeigh / 2));
+//        bmdSecond.draw(canvas);
+//
+//        canvas.restore();
 
         hourRotate = eventHour * 30.0f + eventMinute / 60.0f * 30.0f;
         minuteRotate = eventMinute * 6.0f;

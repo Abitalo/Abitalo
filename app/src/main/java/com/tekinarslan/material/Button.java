@@ -1,4 +1,4 @@
-package com.tekinarslan.material;
+﻿package com.tekinarslan.material;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -30,7 +30,7 @@ public abstract class Button extends RelativeLayout {
     float rippleSpeed = 10f;
     int rippleSize = 3;
     OnClickListener onClickListener;
-    int backgroundColor = Color.parseColor("#ff009688");//即colorPrimaryDark
+    int backgroundColor = Color.parseColor("#FF595959");//即colorPrimaryDark
 
     public Button(Context context, AttributeSet attrs) {
         super(context, attrs);

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_mood"
     android:orientation="vertical"
+    android:background="#f3f3f3"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <AbsoluteLayout
@@ -12,7 +13,14 @@
             android:layout_width="5dp"
             android:layout_height="fill_parent"
             android:layout_x="68dp"
-            android:background="#e7c2b9"
+            android:background="#99595959"
+
+            />
+        <View
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:layout_x="68dp"
+            android:background="#99f57b7b"
 
             />
     </AbsoluteLayout>

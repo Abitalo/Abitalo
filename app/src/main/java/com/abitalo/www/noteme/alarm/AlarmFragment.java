@@ -1,4 +1,4 @@
-package com.abitalo.www.noteme.alarm;
+﻿package com.abitalo.www.noteme.alarm;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,9 +14,12 @@ import android.widget.Toast;
 
 import com.abitalo.www.noteme.R;
 import com.abitalo.www.noteme.Varible;
+import com.sleepbot.datetimepicker.time.RadialPickerLayout;
+import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import com.tekinarslan.material.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -24,6 +27,7 @@ import java.util.Comparator;
  * Created by Lancelot on 2015/9/27.
  */
 public class AlarmFragment extends Fragment implements View.OnClickListener {
+    public static final String TIMEPICKER_TAG = "timepicker";
     private FloatingActionButton add_btn;
     private ImageButton left;
     private ImageButton right;
@@ -41,6 +45,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     private Handler tickHandler ;
     private boolean hasData;
     AlertDialog myDialog;
+    TimePickerDialog timePickerDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +78,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
             Message msg = new Message();
             msg.what = Varible.VALIDATE_CLOCK;
             tickHandler.sendMessage(msg);
-            tickHandler.postDelayed(tickRunnable, 1000);
+            tickHandler.postDelayed(tickRunnable, 60000);
         }
     };
 
@@ -274,6 +279,20 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//TODO function :add a new alarm
+          Toast.makeText(getActivity(),"I'm pressed",Toast.LENGTH_SHORT).show();
+                Calendar calendar = Calendar.getInstance();
+                timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
+                        Toast.makeText(getActivity(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
+                        EventInputDialog eventInputDialog = new EventInputDialog();
+                        eventInputDialog.show(getActivity().getSupportFragmentManager(), getTag());
+                        if(!eventInputDialog.isClicked) return;
+                        String content = eventInputDialog.content;
+//                        Item_Alarm tmp
+                    }
+                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, false);
+                timePickerDialog.show(getActivity().getSupportFragmentManager(), TIMEPICKER_TAG);
                 Toast.makeText(getActivity(),"I'm pressed",Toast.LENGTH_SHORT).show();
             }
         });
