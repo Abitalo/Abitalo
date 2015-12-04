@@ -1,4 +1,4 @@
-package com.abitalo.www.noteme.mood;
+﻿package com.abitalo.www.noteme.mood;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -22,7 +22,6 @@ import java.util.List;
 public class MoodFragment extends Fragment{
     FloatingActionButton add_btn;
 
-    Item_Mood convert=null;
     // 时间轴列表
     private ListView listView;
     // 数据list
@@ -94,10 +93,4 @@ public class MoodFragment extends Fragment{
             }
         });
     }
-
-//    @Override
-//    public void moodEditComplete(Item_Mood newItem){
-//        data.add(newItem);
-//        adapter.notifyDataSetChanged();
-//    }
 }

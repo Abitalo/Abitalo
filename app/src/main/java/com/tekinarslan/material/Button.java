@@ -1,4 +1,4 @@
-﻿package com.tekinarslan.material;
+package com.tekinarslan.material;
 
 import android.content.Context;
 import android.content.res.Resources;

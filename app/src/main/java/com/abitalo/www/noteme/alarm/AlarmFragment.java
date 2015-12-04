@@ -1,4 +1,5 @@
 ﻿package com.abitalo.www.noteme.alarm;
+
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
     private FragmentManager fragmentManager;
     AlertDialog myDialog;
     TimePickerDialog timePickerDialog;
+    EventInputDialog eventInputDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -325,6 +327,12 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
                         args.putInt("minute",minute);
                         eventInputDialog.setArguments(args);
                         eventInputDialog.show(fragmentManager, getTag());
+                        Toast.makeText(getActivity(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
+                        eventInputDialog = new EventInputDialog();
+                        eventInputDialog.show(getActivity().getSupportFragmentManager(), getTag());
+                        if(!eventInputDialog.isClicked) return;
+                        String content = eventInputDialog.content;
+//                        Item_Alarm tmp
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, false);
                 timePickerDialog.show(fragmentManager, TIMEPICKER_TAG);

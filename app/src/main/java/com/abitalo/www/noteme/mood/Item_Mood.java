@@ -19,11 +19,11 @@ public class Item_Mood {
         this.text=text;
     }
 
-    public Item_Mood(String date, String text) {
+    public Item_Mood(String dateString, String text) {
         form=new SimpleDateFormat("yyyyMMdd");
         this.date = Calendar.getInstance();
         try{
-            this.date.setTime(form.parse(date));
+            this.date.setTime(form.parse(dateString));
         }catch(ParseException e){
             Log.i("exception","error in parse date/init");
         }
