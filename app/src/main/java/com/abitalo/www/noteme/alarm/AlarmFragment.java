@@ -1,4 +1,4 @@
-package com.abitalo.www.noteme.alarm;
+﻿package com.abitalo.www.noteme.alarm;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
 import com.abitalo.www.noteme.Varible;
 import com.abitalo.www.noteme.diary.DiaryFragment;
@@ -314,7 +313,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//TODO function :add a new alarm
-//                Toast.makeText(getActivity(),"I'm pressed",Toast.LENGTH_SHORT).show();
+          Toast.makeText(getActivity(),"I'm pressed",Toast.LENGTH_SHORT).show();
                 Calendar calendar = Calendar.getInstance();
                 timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
                     @Override
