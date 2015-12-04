@@ -19,10 +19,9 @@ import java.util.List;
 /**
  * Created by Lancelot on 2015/9/27.
  */
-public class MoodFragment extends Fragment implements MoodEditorDialog.MoodEditListener{
+public class MoodFragment extends Fragment{
     FloatingActionButton add_btn;
 
-    Item_Mood convert=null;
     // 时间轴列表
     private ListView listView;
     // 数据list
@@ -93,11 +92,5 @@ public class MoodFragment extends Fragment implements MoodEditorDialog.MoodEditL
 
             }
         });
-    }
-
-    @Override
-    public void moodEditComplete(Item_Mood newItem){
-        data.add(newItem);
-        adapter.notifyDataSetChanged();
     }
 }
