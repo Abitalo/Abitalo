@@ -87,7 +87,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center|top"
+            android:gravity="center"
             android:includeFontPadding="false"
             android:layout_margin="10dp"
             android:id="@+id/event_text"

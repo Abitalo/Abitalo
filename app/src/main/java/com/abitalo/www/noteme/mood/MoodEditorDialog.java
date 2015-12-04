@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
@@ -27,7 +28,7 @@ public class MoodEditorDialog extends DialogFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view=inflater.inflate(R.layout.mood_editor,container,false);
+        View view=inflater.inflate(R.layout.mood_editor,container);
 
         return view;
     }
@@ -36,8 +37,12 @@ public class MoodEditorDialog extends DialogFragment{
         public void onClick(View v) {
             Calendar now=Calendar.getInstance();
             String text=mood_edit_text.getText().toString();
-
-            ((Main)getActivity()).moodEditComplete(new Item_Mood(now,text));
+            if(text.replaceAll(" ","").equals("")){
+                Toast.makeText(getActivity(),"心情不能为空的说=。=||",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                ((Main)getActivity()).moodEditComplete(new Item_Mood(now,text));
+            }
             dismiss();
         }
     }
