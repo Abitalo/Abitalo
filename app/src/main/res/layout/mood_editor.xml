@@ -21,8 +21,10 @@
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:textColor="#000"
+        android:textColorHint="#595959"
         android:hint="Fuck the world?"
-        android:background="#ffff"
+        android:background="#fff"
         />
     <ImageButton
         android:id="@+id/mood_submit_btn"
