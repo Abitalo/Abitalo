@@ -7,7 +7,7 @@
     >
     <TextView
         android:id="@+id/mood_time"
-        android:layout_width="50dp"
+        android:layout_width="53dp"
         android:layout_height="70dp"
 
         android:layout_alignParentLeft="true"
@@ -36,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginRight="8dp"
         android:layout_toRightOf="@id/imageView1"
         android:text="Hello World"
 

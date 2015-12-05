@@ -1,20 +1,27 @@
 package com.abitalo.www.noteme.alarm;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
 import com.abitalo.www.noteme.Varible;
+import com.abitalo.www.noteme.diary.DiaryFragment;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import com.tekinarslan.material.FloatingActionButton;
@@ -27,12 +34,12 @@ import java.util.Comparator;
 /**
  * Created by Lancelot on 2015/9/27.
  */
-public class AlarmFragment extends Fragment implements View.OnClickListener {
+public class AlarmFragment extends Fragment implements View.OnClickListener , EventInputDialog.alarmEventInputListener{
     public static final String TIMEPICKER_TAG = "timepicker";
     private FloatingActionButton add_btn;
     private ImageButton left;
     private ImageButton right;
-
+    private ImageView dial;
     private TextView eventContent;
     private TextView eventTime;
 
@@ -45,6 +52,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     private Item_Alarm initItem;
     private Handler tickHandler ;
     private boolean hasData;
+    private FragmentManager fragmentManager;
     AlertDialog myDialog;
     TimePickerDialog timePickerDialog;
     @Override
@@ -57,18 +65,21 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                 switch (msg.what){
                     case Varible.VALIDATE_CLOCK:{
                         clock.postInvalidate();
+                        setTime(currentItem);
+                        break;
                     }
                 }
             }
         };
 //        Log.v("logcat","zela Create" );
         //设置提醒item
-        initItem = new Item_Alarm("00:00","00:00","做个计划吧！");
+        initItem = new Item_Alarm("00:00","做个计划吧！");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alarm,container,false);
+        fragmentManager = getFragmentManager();
         init(view);
         tickHandler.post(tickRunnable);
         return view;
@@ -90,6 +101,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
         clock = (Clock) view.findViewById(R.id.clock);
         eventContent = (TextView) view.findViewById(R.id.event_text);
         eventTime = (TextView) view.findViewById(R.id.event_time);
+        dial = (ImageView) view.findViewById(R.id.dial);
         //hasData默认为false
         hasData = false;
         //添加假数据
@@ -142,25 +154,25 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
 
     private  void setClock(Item_Alarm itemAlarm){
         clock.setEventTime(itemAlarm);
-        clock.setOnTouchListener(new View.OnTouchListener() {
+        dial.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        clock.setDialAlpha(235);
+                        dial.setImageAlpha(180);
                         break;
                     case MotionEvent.ACTION_UP:
-                        clock.setDialAlpha(255);
+                        dial.setImageAlpha(255);
                         break;
                 }
                 return false;
             }
         });
-        clock.setOnLongClickListener(new View.OnLongClickListener() {
+        dial.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 //Toast.makeText(getActivity(), "OnLongClickListener事件", Toast.LENGTH_SHORT).show();
-                if(!hasData)
+                if (!hasData)
                     return  true;
                 myDialog = new AlertDialog.Builder(getActivity()).create();
                 myDialog.show();
@@ -171,23 +183,21 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                             @Override
                             public void onClick(View v) {
                                 int id = data.indexOf(currentItem);
-                                if(id+1<data.size()){
-                                    Item_Alarm tmp = data.get(id+1);
+                                if (id + 1 < data.size()) {
+                                    Item_Alarm tmp = data.get(id + 1);
                                     data.remove(currentItem);
                                     currentItem = tmp;
                                     setTime(currentItem);
                                     clock.setEventTime(currentItem);
                                     setEvent(currentItem);
-                                }
-                                else if(id-1>=0){
-                                    Item_Alarm tmp = data.get(id-1);
+                                } else if (id - 1 >= 0) {
+                                    Item_Alarm tmp = data.get(id - 1);
                                     data.remove(currentItem);
-                                    currentItem=tmp;
+                                    currentItem = tmp;
                                     setTime(currentItem);
                                     clock.setEventTime(currentItem);
                                     setEvent(currentItem);
-                                }
-                                else{
+                                } else {
                                     data.remove(currentItem);
                                     currentItem = null;
                                     setTime(initItem);
@@ -206,13 +216,20 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
                                 myDialog.dismiss();
                             }
                         });
-                clock.setDialAlpha(255);
+                dial.setImageAlpha(255);
                 return true;
             }
         });
     }
 
     private  void changeButtonState(){
+        if(!hasData && data.size() > 0){
+            currentItem = data.get(0);
+            hasData = true;
+            setEvent(currentItem);
+            setTime(currentItem);
+            clock.setEventTime(currentItem);
+        }
         if(0 == data.size()) hasData = false;
         else hasData = true;
         if(!hasData || data.size() == 1){
@@ -242,27 +259,46 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setTime(Item_Alarm itemAlarm){
-        eventTime.setText("起始时间：" + itemAlarm.getSatrtTimeString()+"\n结束时间："+itemAlarm.getTerminalTimeString()+"\n");
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        String currentTime = String.format("%02d",hour) + ":" + String.format("%02d",minute);
+        if(null == currentTime || !hasData || data.size()==0){
+            eventTime.setText("开始时间：" + initItem.getSatrtTimeString()+"\n当前时间："+currentTime+"\n");
+        }
+        else {
+            eventTime.setText("开始时间：" + itemAlarm.getSatrtTimeString() + "\n当前时间：" + currentTime + "\n");
+        }
     }
 
     private void addFakeData(){
         Item_Alarm itemAlarm = new Item_Alarm();
         itemAlarm.setStartTimeString("13:12");
-        itemAlarm.setTerminalTimeString("13:42");
         itemAlarm.setText("吃饭、睡觉、打豆豆、学习、洗澡、洗漱、巴拉拉能量、仙朵拉、魔法鞋、古娜拉黑暗之神、沙罗沙罗、黑魔旋风。");
         data.add(itemAlarm);
         itemAlarm = new Item_Alarm();
         itemAlarm.setStartTimeString("16:30");
-        itemAlarm.setTerminalTimeString("20:30");
         itemAlarm.setText("学习");
         data.add(itemAlarm);
         itemAlarm = new Item_Alarm();
         itemAlarm.setStartTimeString("22:30");
-        itemAlarm.setTerminalTimeString("23:00");
         itemAlarm.setText("洗漱");
         data.add(itemAlarm);
         hasData=true;
     }
+
+    public void addEvent(Item_Alarm newItem) {
+//        if(null == data) Log.v("logcat","data is null");
+        data.add(newItem);
+        changeButtonState();
+    }
+
+    @Override
+    public void EventInputComplete(Item_Alarm newItem) {
+        data.add(newItem);
+        changeButtonState();
+    }
+
     private class DateComparator implements Comparator<Item_Alarm> {
 
         @Override
@@ -282,18 +318,20 @@ public class AlarmFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {//TODO function :add a new alarm
 //                Toast.makeText(getActivity(),"I'm pressed",Toast.LENGTH_SHORT).show();
                 Calendar calendar = Calendar.getInstance();
+//                timePickerDialog.setStyle(1,);
                 timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-                        Toast.makeText(getActivity(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getActivity(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
                         EventInputDialog eventInputDialog = new EventInputDialog();
-                        eventInputDialog.show(getActivity().getSupportFragmentManager(), getTag());
-                        if(!eventInputDialog.isClicked) return;
-                        String content = eventInputDialog.content;
-//                        Item_Alarm tmp
+                        Bundle args = new Bundle();
+                        args.putInt("hour",hourOfDay);
+                        args.putInt("minute",minute);
+                        eventInputDialog.setArguments(args);
+                        eventInputDialog.show(fragmentManager, getTag());
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false, false);
-                timePickerDialog.show(getActivity().getSupportFragmentManager(), TIMEPICKER_TAG);
+                timePickerDialog.show(fragmentManager, TIMEPICKER_TAG);
             }
         });
 

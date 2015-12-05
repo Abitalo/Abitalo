@@ -1,31 +1,47 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:background="#f3f3f3">
-
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:id="@+id/alarm_add_line"
+        android:layout_height="13dp"
+        android:elevation="3dp"
+        android:background="#CC595959"/>
+    <TextView
+        android:layout_below="@id/alarm_add_line"
+        android:id="@+id/alarm_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:elevation="2dp"
         android:text="事件内容"
         android:gravity="center"
         android:textSize="23sp"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="#55595959"/>
     <EditText
         android:id="@+id/alarm_content"
         android:layout_width="match_parent"
+        android:layout_below="@id/alarm_dialog_title"
         android:elevation="0dp"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:maxLength="100"
+        android:textColorHint="#3f3f3f3f"
+        android:textColor="@color/colorPrimaryDark"
         android:gravity="top"
         android:layout_height="180dp"
-        android:hint="Fuck the world?"
+        android:hint="做些什么吧……(100字以内)"
         android:background="#ffff"
         />
     <ImageView
+        android:layout_below="@id/alarm_content"
         android:layout_width="match_parent"
         android:layout_height="0.25dp"
+        android:id="@+id/alarm_dialog_line"
         android:background="#cccccc"/>
     <Button
+        android:layout_below="@+id/alarm_dialog_line"
         android:id="@+id/sure_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -36,4 +52,4 @@
         android:text="完成"
         android:textColor="@color/colorPrimaryDark"/>
 
-</LinearLayout>
+</RelativeLayout>
