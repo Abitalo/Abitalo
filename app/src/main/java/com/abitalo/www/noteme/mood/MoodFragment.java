@@ -1,4 +1,4 @@
-package com.abitalo.www.noteme.mood;
+﻿package com.abitalo.www.noteme.mood;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

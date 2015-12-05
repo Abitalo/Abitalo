@@ -1,4 +1,4 @@
-package com.abitalo.www.noteme;
+﻿package com.abitalo.www.noteme;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,13 +12,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import com.abitalo.www.noteme.alarm.AlarmFragment;
+import com.abitalo.www.noteme.alarm.EventInputDialog;
+import com.abitalo.www.noteme.alarm.Item_Alarm;
 import com.abitalo.www.noteme.diary.DiaryFragment;
 import com.abitalo.www.noteme.mood.Item_Mood;
 import com.abitalo.www.noteme.mood.MoodEditorDialog;
 import com.abitalo.www.noteme.mood.MoodFragment;
 import com.tekinarslan.material.SlidingTabLayout;
 
-public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener{//TODO : code optimization
+public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.alarmEventInputListener{//TODO : code optimization
 
     private AlarmFragment alarmFragment;
     private MoodFragment moodFragment;
@@ -73,6 +75,12 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
         moodFragment.update(newItem);
     }
 
+    @Override
+    public void EventInputComplete(Item_Alarm newItem) {
+        if(null != alarmFragment)
+        alarmFragment.addEvent(newItem);
+    }
+
     public class ViewPagerAdapter extends FragmentPagerAdapter {
         private static final int TAB_INDEX_ONE = 0;
         private static final int TAB_INDEX_TWO = 1;
@@ -90,21 +98,21 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
             switch (position) {
                 case TAB_INDEX_ONE: {
                     if (null == alarmFragment) {
-                        alarmFragment= new AlarmFragment();
+                        alarmFragment =  new AlarmFragment();
                     }
-                    return alarmFragment;
+                    return  alarmFragment;
                 }
                 case TAB_INDEX_TWO: {
                     if (null == moodFragment) {
-                        moodFragment= new MoodFragment();
+                        moodFragment =  new MoodFragment();
                     }
                     return moodFragment;
                 }
                 case TAB_INDEX_THREE: {
                     if (null == diaryFragment) {
-                        diaryFragment =new DiaryFragment();
+                        diaryFragment =  new DiaryFragment();
                     }
-                    return diaryFragment;
+                    return  diaryFragment;
                 }
             }
             return null;

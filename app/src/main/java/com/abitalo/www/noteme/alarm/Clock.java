@@ -46,9 +46,7 @@ public class Clock extends View {
     BitmapDrawable bmdBlueHour;
     BitmapDrawable bmdBlueMinute;
 
-    Paint mPaint;
-
-    Handler tickHandler;
+//    Paint mPaint;
 
     int mWidth;
     int mHeigh;
@@ -64,13 +62,11 @@ public class Clock extends View {
     int eventMinute = 2;
 
     Calendar eventStartTime;
-    Calendar eventTerminalTime;
 
     public Clock(Context context, AttributeSet attr) {
         super(context,attr);
 
         eventStartTime = Calendar.getInstance();
-        eventTerminalTime = Calendar.getInstance();
 
         mBmpHour = BitmapFactory.decodeResource(getResources(),
                 R.drawable.hour_current);
@@ -111,8 +107,8 @@ public class Clock extends View {
         centerX = (int) (130 * dm.density);
         centerY = (int) (130 * dm.density);
 
-        mPaint = new Paint();
-        mPaint.setColor(Color.BLUE);
+//        mPaint = new Paint();
+//        mPaint.setColor(Color.BLUE);
     }
 
     protected void onDraw(Canvas canvas) {
@@ -125,8 +121,8 @@ public class Clock extends View {
         float hourRotate = hour * 30.0f + minute / 60.0f * 30.0f;
         float minuteRotate = minute * 6.0f;
         float secondRotate = second * 6.0f;
-        String remainingTime = "剩余：00:00";
-        TextPaint mTextPaint = new TextPaint();
+//        String remainingTime = "剩余：00:00";
+//        TextPaint mTextPaint = new TextPaint();
 
         float scale = Math.min((float) availableWidth / (float) mWidth,
                 (float) availableHeight / (float) mHeigh);
@@ -137,45 +133,45 @@ public class Clock extends View {
 //                centerX + (mWidth / 2), centerY + (mHeigh / 2));
 //        bmdDial.draw(canvas);
         //换算单位
-        final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
-        int pixel = (int)(SP_VALUE * fontScale + 0.5f);
-        mTextPaint.setTextSize(pixel);
-        //比较时间
-        //1.未开始统计还有多少时间
-        if(eventHour > cal.get(Calendar.HOUR_OF_DAY) ||
-                ((eventHour == cal.get(Calendar.HOUR_OF_DAY)) && eventMinute > cal.get(Calendar.MINUTE))){
-            mTextPaint.setColor(Color.parseColor(BULE_TEXT));
-            long diff = eventHour * 60 + eventMinute - (cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE));
-            long hh = diff / 60;
-            long mm = diff - hh * 60;
-            remainingTime = "还有：" + String.format("%02d",hh) + ":" + String.format("%02d",mm);
-        }
-        //2.已经开始统计剩下多少时间
-        else if(eventTerminalTime.get(Calendar.HOUR_OF_DAY) > cal.get(Calendar.HOUR_OF_DAY) ||
-                (eventTerminalTime.get(Calendar.HOUR_OF_DAY) == cal.get(Calendar.HOUR_OF_DAY) &&
-                        eventTerminalTime.get(Calendar.MINUTE) >= cal.get(Calendar.MINUTE))){
-            mTextPaint.setColor(Color.parseColor(RED_TEXT));
-            long diff = (eventTerminalTime.get(Calendar.HOUR_OF_DAY) * 60 + eventTerminalTime.get(Calendar.MINUTE) - (cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)));
-            long hh = diff / 60;
-            long mm = diff - hh * 60;
-            remainingTime = "剩余：" + String.format("%02d",hh) + ":" + String.format("%02d",mm);
-        }
-        else{
-            mTextPaint.setColor(Color.parseColor(GRAY_TEXT));
-            remainingTime = "结束：00:00";
-        }
+//        final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
+//        int pixel = (int)(SP_VALUE * fontScale + 0.5f);
+//        mTextPaint.setTextSize(pixel);
+//        //比较时间
+//        //1.未开始统计还有多少时间
+//        if(eventHour > cal.get(Calendar.HOUR_OF_DAY) ||
+//                ((eventHour == cal.get(Calendar.HOUR_OF_DAY)) && eventMinute > cal.get(Calendar.MINUTE))){
+//            mTextPaint.setColor(Color.parseColor(BULE_TEXT));
+//            long diff = eventHour * 60 + eventMinute - (cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE));
+//            long hh = diff / 60;
+//            long mm = diff - hh * 60;
+//            remainingTime = "还有：" + String.format("%02d",hh) + ":" + String.format("%02d",mm);
+//        }
+//        //2.已经开始统计剩下多少时间
+//        else if(eventTerminalTime.get(Calendar.HOUR_OF_DAY) > cal.get(Calendar.HOUR_OF_DAY) ||
+//                (eventTerminalTime.get(Calendar.HOUR_OF_DAY) == cal.get(Calendar.HOUR_OF_DAY) &&
+//                        eventTerminalTime.get(Calendar.MINUTE) >= cal.get(Calendar.MINUTE))){
+//            mTextPaint.setColor(Color.parseColor(RED_TEXT));
+//            long diff = (eventTerminalTime.get(Calendar.HOUR_OF_DAY) * 60 + eventTerminalTime.get(Calendar.MINUTE) - (cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)));
+//            long hh = diff / 60;
+//            long mm = diff - hh * 60;
+//            remainingTime = "剩余：" + String.format("%02d",hh) + ":" + String.format("%02d",mm);
+//        }
+//        else{
+//            mTextPaint.setColor(Color.parseColor(GRAY_TEXT));
+//            remainingTime = "结束：00:00";
+//        }
 
         // 计算Baseline绘制的起点X轴坐标 ，计算方式：画布宽度的1/2 - 文字宽度的1/2
-        int baseX = (int) (canvas.getWidth() / 2 - mTextPaint.measureText(remainingTime) / 2);
+//        int baseX = (int) (canvas.getWidth() / 2 - mTextPaint.measureText(remainingTime) / 2);
 
         // 计算Baseline绘制的Y坐标 ，计算方式：画布高度的4/5 - 文字总高度的1/2
-        int baseY = (int) (4 * (canvas.getHeight() / 5) - ((mTextPaint.descent() + mTextPaint.ascent()) / 2));
+//        int baseY = (int) (4 * (canvas.getHeight() / 5) - ((mTextPaint.descent() + mTextPaint.ascent()) / 2));
 
         // 画文字
-        canvas.save();
-        canvas.scale(1 / scale, 1 / scale, centerX, centerY);
-        canvas.drawText(remainingTime, baseX, baseY, mTextPaint);
-        canvas .restore();
+//        canvas.save();
+//        canvas.scale(1 / scale, 1 / scale, centerX, centerY);
+//        canvas.drawText(remainingTime, baseX, baseY, mTextPaint);
+//        canvas .restore();
 
         mTempWidth = bmdHour.getIntrinsicWidth();
         mTempHeigh = bmdHour.getIntrinsicHeight();
@@ -239,7 +235,6 @@ public class Clock extends View {
 
     public void setEventTime(Item_Alarm itemAlarm){
         eventStartTime = itemAlarm.getStartTime();
-        eventTerminalTime = itemAlarm.getTerminalTime();
         eventHour=Integer.parseInt(itemAlarm.getStartTimeHour());
         eventMinute=Integer.parseInt(itemAlarm.getStartTimeMinute());
         postInvalidate();

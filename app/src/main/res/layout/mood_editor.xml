@@ -4,37 +4,54 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#595959"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
-
+    android:background="#fff3f3f3">
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/mood_edit_line"
+        android:layout_height="13dp"
+        android:elevation="3dp"
+        android:background="#DD595959"/>
     <TextView
+        android:layout_below="@id/mood_edit_line"
         android:id="@+id/mood_editor_title"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:textSize="20sp"
-        android:paddingTop="10dp"
-        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:gravity="center|left"
+        android:elevation="2dp"
+        android:textColor="#99f57b7b"
+        android:background="#fff3f3f3"
         android:text="So,今天的心情是……"/>
 
     <EditText
         android:id="@+id/mood_edit_text"
+        android:padding="5dp"
+        android:gravity="top"
         android:layout_below="@id/mood_editor_title"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textColor="#000"
-        android:textColorHint="#595959"
-        android:hint="Fuck the world?"
+        android:maxLength="143"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="200dp"
+        android:elevation="3dp"
+        android:hint="(*￣3￣)╭……(143字以内）"
+        android:textColorHint="#3f3f3f3f"
         android:background="#fff"
         />
     <ImageButton
         android:id="@+id/mood_submit_btn"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="6dp"
         android:layout_below="@id/mood_edit_text"
         android:layout_alignRight="@id/mood_edit_text"
         android:layout_width="wrap_content"
+        android:background="#fff3f3f3"
         android:layout_height="wrap_content"
         android:src="@drawable/btn_mood"/>
-
+    <ImageView
+        android:layout_below="@id/mood_submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#DD595959"/>
 </RelativeLayout>
