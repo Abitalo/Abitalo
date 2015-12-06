@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Lancelot on 2015/9/27.
  */
-public class DiaryFragment extends Fragment {
+public class DiaryFragment extends Fragment implements MasonryView.OnItemClickListener,MasonryView.OnItemLongClickListener{
     private View view;
     //RecyclerView for implements Masonry Style of diaries.
     private RecyclerView recyclerView;
@@ -65,6 +65,8 @@ public class DiaryFragment extends Fragment {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        adapter.setOnItemClickListener(this);
+        adapter.setOnItemLongClickListener(this);
         //TODO setOnItemClickListener
 
     }
@@ -88,6 +90,27 @@ public class DiaryFragment extends Fragment {
         data.add(data3);
         data.add(data1);
         data.add(data2);
+    }
+
+    @Override
+    public void onClick(View v, int position) {
+        //TODO function :edit diary
+    }
+
+    @Override
+    public void onLongClick(View v, int position) {
+        Bundle pos=new Bundle();
+        pos.putInt("position",position);
+
+        DiaryDeletionDialog diaryDeletionDialog=new DiaryDeletionDialog();
+        diaryDeletionDialog.setArguments(pos);
+
+        diaryDeletionDialog.show(getFragmentManager(), getTag());
+    }
+
+    public void deleteItem(int position){
+        data.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 }
 

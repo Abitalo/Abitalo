@@ -1,4 +1,4 @@
-﻿package com.abitalo.www.noteme;
+package com.abitalo.www.noteme;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,13 +14,14 @@ import android.util.Log;
 import com.abitalo.www.noteme.alarm.AlarmFragment;
 import com.abitalo.www.noteme.alarm.EventInputDialog;
 import com.abitalo.www.noteme.alarm.Item_Alarm;
+import com.abitalo.www.noteme.diary.DiaryDeletionDialog;
 import com.abitalo.www.noteme.diary.DiaryFragment;
 import com.abitalo.www.noteme.mood.Item_Mood;
 import com.abitalo.www.noteme.mood.MoodEditorDialog;
 import com.abitalo.www.noteme.mood.MoodFragment;
 import com.tekinarslan.material.SlidingTabLayout;
 
-public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.alarmEventInputListener{//TODO : code optimization
+public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.AlarmEventInputListener,DiaryDeletionDialog.DiaryDeleteListener {//TODO : code optimization
 
     private AlarmFragment alarmFragment;
     private MoodFragment moodFragment;
@@ -72,13 +73,20 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
 
     @Override
     public void moodEditComplete(Item_Mood newItem) {
-        moodFragment.update(newItem);
+        if(null != alarmFragment)
+            moodFragment.update(newItem);
     }
 
     @Override
     public void EventInputComplete(Item_Alarm newItem) {
         if(null != alarmFragment)
-        alarmFragment.addEvent(newItem);
+            alarmFragment.addEvent(newItem);
+    }
+
+    @Override
+    public void deleteItem(int position) {
+        if(null !=diaryFragment)
+            diaryFragment.deleteItem(position);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

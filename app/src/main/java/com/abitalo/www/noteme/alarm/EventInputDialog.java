@@ -1,7 +1,6 @@
 package com.abitalo.www.noteme.alarm;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +8,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
-import com.abitalo.www.noteme.mood.Item_Mood;
-
-import java.util.Calendar;
 
 
 /**
@@ -32,6 +27,16 @@ public class EventInputDialog extends DialogFragment{
         View view=inflater.inflate(R.layout.alarm_add_content,container,false);
         return view;
     }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        submit_btn=(Button)getDialog().findViewById(R.id.sure_button);
+        event_add_text=(EditText)getDialog().findViewById(R.id.alarm_content);
+        submit_btn.setOnClickListener(new submitOnclickListener());
+    }
+
     private class submitOnclickListener implements View.OnClickListener{
         @Override
         public void onClick(View v) {
@@ -47,17 +52,9 @@ public class EventInputDialog extends DialogFragment{
         }
     }
 
-    public interface alarmEventInputListener
-    {
+    public interface AlarmEventInputListener {
         void EventInputComplete(Item_Alarm newItem);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
-        submit_btn=(Button)getDialog().findViewById(R.id.sure_button);
-        event_add_text=(EditText)getDialog().findViewById(R.id.alarm_content);
-        submit_btn.setOnClickListener(new submitOnclickListener());
-    }
 }
