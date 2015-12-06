@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.abitalo.www.noteme.R;
 
@@ -13,9 +12,11 @@ import java.util.List;
 /**
  * Created by Lancelot on 2015/12/4.
  */
-public class MasonryAdapter extends RecyclerView.Adapter<MasonryAdapter.MasonryView>{
+public class MasonryAdapter extends RecyclerView.Adapter<MasonryView>{
     private List<Item_Diary> list;
 
+    private MasonryView.OnItemClickListener mItemClickListener;
+    private MasonryView.OnItemLongClickListener mItemLongClickListener;
 
     public MasonryAdapter(List<Item_Diary> list) {
         this.list =list;
@@ -24,7 +25,7 @@ public class MasonryAdapter extends RecyclerView.Adapter<MasonryAdapter.MasonryV
     @Override
     public MasonryView onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.diary_item, viewGroup, false);
-        return new MasonryView(view);
+        return new MasonryView(view,mItemClickListener,mItemLongClickListener);
     }
 
     @Override
@@ -40,19 +41,15 @@ public class MasonryAdapter extends RecyclerView.Adapter<MasonryAdapter.MasonryV
         return list.size();
     }
 
-    public static class MasonryView extends  RecyclerView.ViewHolder{
-
-        TextView title;
-        TextView text;
-        TextView date;
-
-        public MasonryView(View itemView){
-            super(itemView);
-            title= (TextView) itemView.findViewById(R.id.diary_item_title);
-            text= (TextView) itemView.findViewById(R.id.diary_item_text);
-            date= (TextView) itemView.findViewById(R.id.diary_item_date);
-        }
-
+    public void setOnItemClickListener(MasonryView.OnItemClickListener listener){
+        this.mItemClickListener = listener;
     }
+
+    public void setOnItemLongClickListener(MasonryView.OnItemLongClickListener listener){
+        this.mItemLongClickListener = listener;
+    }
+
+
+
 
 }
