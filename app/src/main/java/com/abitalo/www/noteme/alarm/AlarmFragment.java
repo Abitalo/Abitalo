@@ -1,5 +1,8 @@
 package com.abitalo.www.noteme.alarm;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8b054bfffc4c3ca8c62b6aad93ee70bd5a7e5cad
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
 import com.abitalo.www.noteme.Varible;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
@@ -33,7 +40,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
     private FloatingActionButton add_btn;
     private ImageButton left;
     private ImageButton right;
-
+    private ImageView dial;
     private TextView eventContent;
     private TextView eventTime;
 
@@ -96,6 +103,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
         clock = (Clock) view.findViewById(R.id.clock);
         eventContent = (TextView) view.findViewById(R.id.event_text);
         eventTime = (TextView) view.findViewById(R.id.event_time);
+        dial = (ImageView) view.findViewById(R.id.dial);
         //hasData默认为false
         hasData = false;
         //添加假数据
@@ -148,25 +156,25 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
 
     private  void setClock(Item_Alarm itemAlarm){
         clock.setEventTime(itemAlarm);
-        clock.setOnTouchListener(new View.OnTouchListener() {
+        dial.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        clock.setDialAlpha(235);
+                        dial.setImageAlpha(180);
                         break;
                     case MotionEvent.ACTION_UP:
-                        clock.setDialAlpha(255);
+                        dial.setImageAlpha(255);
                         break;
                 }
                 return false;
             }
         });
-        clock.setOnLongClickListener(new View.OnLongClickListener() {
+        dial.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 //Toast.makeText(getActivity(), "OnLongClickListener事件", Toast.LENGTH_SHORT).show();
-                if(!hasData)
+                if (!hasData)
                     return  true;
                 myDialog = new AlertDialog.Builder(getActivity()).create();
                 myDialog.show();
@@ -177,23 +185,21 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
                             @Override
                             public void onClick(View v) {
                                 int id = data.indexOf(currentItem);
-                                if(id+1<data.size()){
-                                    Item_Alarm tmp = data.get(id+1);
+                                if (id + 1 < data.size()) {
+                                    Item_Alarm tmp = data.get(id + 1);
                                     data.remove(currentItem);
                                     currentItem = tmp;
                                     setTime(currentItem);
                                     clock.setEventTime(currentItem);
                                     setEvent(currentItem);
-                                }
-                                else if(id-1>=0){
-                                    Item_Alarm tmp = data.get(id-1);
+                                } else if (id - 1 >= 0) {
+                                    Item_Alarm tmp = data.get(id - 1);
                                     data.remove(currentItem);
-                                    currentItem=tmp;
+                                    currentItem = tmp;
                                     setTime(currentItem);
                                     clock.setEventTime(currentItem);
                                     setEvent(currentItem);
-                                }
-                                else{
+                                } else {
                                     data.remove(currentItem);
                                     currentItem = null;
                                     setTime(initItem);
@@ -212,7 +218,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
                                 myDialog.dismiss();
                             }
                         });
-                clock.setDialAlpha(255);
+                dial.setImageAlpha(255);
                 return true;
             }
         });
@@ -312,8 +318,9 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//TODO function :add a new alarm
-          Toast.makeText(getActivity(),"I'm pressed",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(),"I'm pressed",Toast.LENGTH_SHORT).show();
                 Calendar calendar = Calendar.getInstance();
+//                timePickerDialog.setStyle(1,);
                 timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {

@@ -21,32 +21,19 @@ import java.util.Calendar;
  * Created by asus on 2015/11/26.
  */
 public class Clock extends View {
-    //时钟上时间文字的大小（dp)
-    int SP_VALUE = 12;
 
-    //文字颜色Red
-    String RED_TEXT="#f57b7b";
-    //文字颜色Bule
-    String BULE_TEXT="#6ddec8";
-    //文字颜色Gray
-    String GRAY_TEXT="#d3caba";
-
-    //时钟盘，分针、秒针、时针对象
+    //时钟分针、时针对象
     Bitmap mBmpDial;
     Bitmap mBmpHour;
     Bitmap mBmpMinute;
-//    Bitmap mBmpSecond;
     Bitmap mBmpBlueHour;
     Bitmap mBmpBlueMinute;
 
     BitmapDrawable bmdHour;
     BitmapDrawable bmdMinute;
-    BitmapDrawable bmdDial;
-//    BitmapDrawable bmdSecond;
+//    BitmapDrawable bmdDial;
     BitmapDrawable bmdBlueHour;
     BitmapDrawable bmdBlueMinute;
-
-//    Paint mPaint;
 
     int mWidth;
     int mHeigh;
@@ -76,14 +63,10 @@ public class Clock extends View {
                 R.drawable.min_current);
         bmdMinute = new BitmapDrawable(context.getResources(),mBmpMinute);
 
-//        mBmpSecond = BitmapFactory.decodeResource(getResources(),
-//                R.drawable.rline);
-//        bmdSecond = new BitmapDrawable(getResources(),mBmpSecond);
-
         mBmpDial = BitmapFactory.decodeResource(getResources(),
                 R.drawable.clock);
-        bmdDial = new BitmapDrawable(context.getResources(),mBmpDial);
-       // bmdDial.setAlpha(225);
+//        bmdDial = new BitmapDrawable(context.getResources(),mBmpDial);
+
         mBmpBlueHour = BitmapFactory.decodeResource(getResources(),
                 R.drawable.hour_des);
         bmdBlueHour = new BitmapDrawable(context.getResources(),mBmpBlueHour);
@@ -106,9 +89,6 @@ public class Clock extends View {
 
         centerX = (int) (130 * dm.density);
         centerY = (int) (130 * dm.density);
-
-//        mPaint = new Paint();
-//        mPaint.setColor(Color.BLUE);
     }
 
     protected void onDraw(Canvas canvas) {
@@ -121,57 +101,11 @@ public class Clock extends View {
         float hourRotate = hour * 30.0f + minute / 60.0f * 30.0f;
         float minuteRotate = minute * 6.0f;
         float secondRotate = second * 6.0f;
-//        String remainingTime = "剩余：00:00";
-//        TextPaint mTextPaint = new TextPaint();
 
         float scale = Math.min((float) availableWidth / (float) mWidth,
                 (float) availableHeight / (float) mHeigh);
         canvas.save();
         canvas.scale(scale, scale, centerX, centerY);
-
-//        bmdDial.setBounds(centerX - (mWidth / 2), centerY - (mHeigh / 2),
-//                centerX + (mWidth / 2), centerY + (mHeigh / 2));
-//        bmdDial.draw(canvas);
-        //换算单位
-//        final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
-//        int pixel = (int)(SP_VALUE * fontScale + 0.5f);
-//        mTextPaint.setTextSize(pixel);
-//        //比较时间
-//        //1.未开始统计还有多少时间
-//        if(eventHour > cal.get(Calendar.HOUR_OF_DAY) ||
-//                ((eventHour == cal.get(Calendar.HOUR_OF_DAY)) && eventMinute > cal.get(Calendar.MINUTE))){
-//            mTextPaint.setColor(Color.parseColor(BULE_TEXT));
-//            long diff = eventHour * 60 + eventMinute - (cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE));
-//            long hh = diff / 60;
-//            long mm = diff - hh * 60;
-//            remainingTime = "还有：" + String.format("%02d",hh) + ":" + String.format("%02d",mm);
-//        }
-//        //2.已经开始统计剩下多少时间
-//        else if(eventTerminalTime.get(Calendar.HOUR_OF_DAY) > cal.get(Calendar.HOUR_OF_DAY) ||
-//                (eventTerminalTime.get(Calendar.HOUR_OF_DAY) == cal.get(Calendar.HOUR_OF_DAY) &&
-//                        eventTerminalTime.get(Calendar.MINUTE) >= cal.get(Calendar.MINUTE))){
-//            mTextPaint.setColor(Color.parseColor(RED_TEXT));
-//            long diff = (eventTerminalTime.get(Calendar.HOUR_OF_DAY) * 60 + eventTerminalTime.get(Calendar.MINUTE) - (cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)));
-//            long hh = diff / 60;
-//            long mm = diff - hh * 60;
-//            remainingTime = "剩余：" + String.format("%02d",hh) + ":" + String.format("%02d",mm);
-//        }
-//        else{
-//            mTextPaint.setColor(Color.parseColor(GRAY_TEXT));
-//            remainingTime = "结束：00:00";
-//        }
-
-        // 计算Baseline绘制的起点X轴坐标 ，计算方式：画布宽度的1/2 - 文字宽度的1/2
-//        int baseX = (int) (canvas.getWidth() / 2 - mTextPaint.measureText(remainingTime) / 2);
-
-        // 计算Baseline绘制的Y坐标 ，计算方式：画布高度的4/5 - 文字总高度的1/2
-//        int baseY = (int) (4 * (canvas.getHeight() / 5) - ((mTextPaint.descent() + mTextPaint.ascent()) / 2));
-
-        // 画文字
-//        canvas.save();
-//        canvas.scale(1 / scale, 1 / scale, centerX, centerY);
-//        canvas.drawText(remainingTime, baseX, baseY, mTextPaint);
-//        canvas .restore();
 
         mTempWidth = bmdHour.getIntrinsicWidth();
         mTempHeigh = bmdHour.getIntrinsicHeight();
@@ -194,17 +128,6 @@ public class Clock extends View {
         bmdMinute.draw(canvas);
 
         canvas.restore();
-
-//        mTempWidth = bmdSecond.getIntrinsicWidth();
-//        mTempHeigh = bmdSecond.getIntrinsicHeight();
-//        canvas.save();
-//        canvas.rotate(secondRotate, centerX, centerY);
-//        bmdSecond.setBounds(centerX - (mTempWidth / 2), centerY
-//                - (mTempHeigh / 2), centerX + (mTempWidth / 2), centerY
-//                + (mTempHeigh / 2));
-//        bmdSecond.draw(canvas);
-//
-//        canvas.restore();
 
         hourRotate = eventHour * 30.0f + eventMinute / 60.0f * 30.0f;
         minuteRotate = eventMinute * 6.0f;
@@ -239,10 +162,4 @@ public class Clock extends View {
         eventMinute=Integer.parseInt(itemAlarm.getStartTimeMinute());
         postInvalidate();
     }
-
-    public void setDialAlpha(int value){
-        bmdDial.setAlpha(value);
-        postInvalidate();
-    }
-
 }
