@@ -12,14 +12,14 @@
         <View
             android:layout_width="5dp"
             android:layout_height="fill_parent"
-            android:layout_x="68dp"
+            android:layout_x="71dp"
             android:background="#99595959"
 
             />
         <View
             android:layout_width="2dp"
             android:layout_height="fill_parent"
-            android:layout_x="68dp"
+            android:layout_x="71dp"
             android:background="#99f57b7b"
 
             />
