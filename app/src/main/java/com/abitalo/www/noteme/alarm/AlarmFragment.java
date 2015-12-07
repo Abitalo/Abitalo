@@ -1,12 +1,14 @@
 package com.abitalo.www.noteme.alarm;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 8b054bfffc4c3ca8c62b6aad93ee70bd5a7e5cad
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,7 +23,6 @@ import android.widget.Toast;
 import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
 import com.abitalo.www.noteme.Varible;
-import com.abitalo.www.noteme.diary.DiaryFragment;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import com.tekinarslan.material.FloatingActionButton;
@@ -34,7 +35,7 @@ import java.util.Comparator;
 /**
  * Created by Lancelot on 2015/9/27.
  */
-public class AlarmFragment extends Fragment implements View.OnClickListener , EventInputDialog.alarmEventInputListener{
+public class AlarmFragment extends Fragment implements View.OnClickListener , EventInputDialog.AlarmEventInputListener {
     public static final String TIMEPICKER_TAG = "timepicker";
     private FloatingActionButton add_btn;
     private ImageButton left;
@@ -55,6 +56,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
     private FragmentManager fragmentManager;
     AlertDialog myDialog;
     TimePickerDialog timePickerDialog;
+    EventInputDialog eventInputDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

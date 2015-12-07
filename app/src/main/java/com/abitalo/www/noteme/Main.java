@@ -9,33 +9,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.abitalo.www.noteme.alarm.AlarmFragment;
 import com.abitalo.www.noteme.alarm.EventInputDialog;
 import com.abitalo.www.noteme.alarm.Item_Alarm;
+import com.abitalo.www.noteme.diary.DiaryDeletionDialog;
 import com.abitalo.www.noteme.diary.DiaryFragment;
 import com.abitalo.www.noteme.mood.Item_Mood;
 import com.abitalo.www.noteme.mood.MoodEditorDialog;
 import com.abitalo.www.noteme.mood.MoodFragment;
-
 import com.tekinarslan.material.SlidingTabLayout;
 
-public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.alarmEventInputListener{//TODO : code optimization
+public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.AlarmEventInputListener,DiaryDeletionDialog.DiaryDeleteListener {//TODO : code optimization
 
-//    private ImageView titleLine;
-//    private ViewPagerAdapter mViewPagerAdapter;
-//    private ImageButton alarmImage;
-//    private ImageButton moodImage;
-//    private ImageButton diaryImage;
     private AlarmFragment alarmFragment;
     private MoodFragment moodFragment;
     private DiaryFragment diaryFragment;
     ViewPager mViewPager;
 
     private String[] titles=new String[]{"时间","心情","日记"};
-    private Toolbar toolbar;
 
     private SlidingTabLayout slidingTabLayout;
 
@@ -44,11 +37,6 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-////            toolbar.setNavigationIcon(R.drawable.ic_ab_drawer);
-//        }
         mViewPager = (ViewPager) findViewById(R.id.pager);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), titles));
@@ -61,10 +49,8 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
             }
         });
 
-//        init();
         initDatabase();
-        //setDefaultFragment();
-//        setViewPager();
+
     }
 
     private void initDatabase(){
@@ -87,13 +73,20 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
 
     @Override
     public void moodEditComplete(Item_Mood newItem) {
-        moodFragment.update(newItem);
+        if(null != alarmFragment)
+            moodFragment.update(newItem);
     }
 
     @Override
     public void EventInputComplete(Item_Alarm newItem) {
         if(null != alarmFragment)
-        alarmFragment.addEvent(newItem);
+            alarmFragment.addEvent(newItem);
+    }
+
+    @Override
+    public void deleteItem(int position) {
+        if(null !=diaryFragment)
+            diaryFragment.deleteItem(position);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {

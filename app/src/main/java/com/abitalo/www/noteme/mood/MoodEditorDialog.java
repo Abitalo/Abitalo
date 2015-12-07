@@ -1,8 +1,8 @@
 package com.abitalo.www.noteme.mood;
 
-import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
@@ -32,7 +33,17 @@ public class MoodEditorDialog extends DialogFragment{
 
         return view;
     }
-    private class submitOnclickListener implements View.OnClickListener{
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        submit_btn=(ImageButton)getDialog().findViewById(R.id.mood_submit_btn);
+        mood_edit_text=(EditText)getDialog().findViewById(R.id.mood_edit_text);
+        submit_btn.setOnClickListener(new submitOnclickListener());
+    }
+
+    private class submitOnclickListener implements OnClickListener{
         @Override
         public void onClick(View v) {
             Calendar now=Calendar.getInstance();
@@ -52,12 +63,4 @@ public class MoodEditorDialog extends DialogFragment{
         void moodEditComplete(Item_Mood newItem);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        submit_btn=(ImageButton)getDialog().findViewById(R.id.mood_submit_btn);
-        mood_edit_text=(EditText)getDialog().findViewById(R.id.mood_edit_text);
-        submit_btn.setOnClickListener(new submitOnclickListener());
-    }
 }
