@@ -1,5 +1,6 @@
 package com.abitalo.www.noteme.diary;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
+import com.abitalo.www.noteme.alarm.Item_Alarm;
 import com.tekinarslan.material.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -29,6 +32,8 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
     private MasonryAdapter adapter;
     //Button to write a new diary
     private FloatingActionButton add_btn;
+    private AlertDialog myDialog;
+    private int pos;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_diary, container, false);
@@ -64,7 +69,6 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         adapter.setOnItemClickListener(this);
         adapter.setOnItemLongClickListener(this);
         //TODO setOnItemClickListener
@@ -99,13 +103,27 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
 
     @Override
     public void onLongClick(View v, int position) {
-        Bundle pos=new Bundle();
-        pos.putInt("position",position);
-
-        DiaryDeletionDialog diaryDeletionDialog=new DiaryDeletionDialog();
-        diaryDeletionDialog.setArguments(pos);
-
-        diaryDeletionDialog.show(getFragmentManager(), getTag());
+        pos=position;
+        myDialog = new AlertDialog.Builder(getActivity()).create();
+        myDialog.show();
+        myDialog.getWindow().setContentView(R.layout.diary_delete_dialog);
+        myDialog.getWindow()
+                .findViewById(R.id.diary_delete_submit_btn)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteItem(pos);
+                        myDialog.dismiss();
+                    }
+                });
+        myDialog.getWindow()
+                .findViewById(R.id.diary_delete_reject_btn)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        myDialog.dismiss();
+                    }
+                });
     }
 
     public void deleteItem(int position){

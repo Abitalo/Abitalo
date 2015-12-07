@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-=======
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
->>>>>>> 8b054bfffc4c3ca8c62b6aad93ee70bd5a7e5cad
     android:layout_height="wrap_content"
     android:background="#fff3f3f3">
     <ImageView

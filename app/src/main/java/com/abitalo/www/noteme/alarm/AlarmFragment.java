@@ -1,8 +1,4 @@
 package com.abitalo.www.noteme.alarm;
-<<<<<<< HEAD
-
-=======
->>>>>>> 8b054bfffc4c3ca8c62b6aad93ee70bd5a7e5cad
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;

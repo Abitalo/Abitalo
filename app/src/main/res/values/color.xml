@@ -9,7 +9,7 @@
     <!--<color name="blue">#304f9f</color>-->
     <color name="grey">@color/material_blue_grey_800</color>
     <color name="light">@color/primary_material_light</color>
-
+    <color name="rose">#99f57b7b</color>
     <color name="colorPrimary">#ff595959</color>
     <color name="colorPrimaryDark">#ff595959</color>
     <color name="blue">#55595959</color>
