@@ -1,5 +1,6 @@
 package com.abitalo.www.noteme.diary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,6 +30,8 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
     private MasonryAdapter adapter;
     //Button to write a new diary
     private FloatingActionButton add_btn;
+    //Request code for start a edit activity
+    private static final int DIARY_EDIT_REQUEST = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_diary, container, false);
@@ -94,7 +97,10 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
 
     @Override
     public void onClick(View v, int position) {
-        //TODO function :edit diary
+        Intent intent = new Intent();
+        intent.setClass(getActivity(),DiaryEditActivity.class);
+        intent.putExtra("isEditing",true);
+        startActivityForResult(intent, DIARY_EDIT_REQUEST);
     }
 
     @Override
@@ -111,6 +117,11 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
     public void deleteItem(int position){
         data.remove(position);
         adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 

@@ -1,8 +1,4 @@
 package com.abitalo.www.noteme.alarm;
-<<<<<<< HEAD
-
-=======
->>>>>>> 8b054bfffc4c3ca8c62b6aad93ee70bd5a7e5cad
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,14 +9,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
 import com.abitalo.www.noteme.Varible;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
