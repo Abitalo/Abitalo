@@ -6,13 +6,15 @@
     <color name="material_teal">@color/material_deep_teal_500</color>
     <color name="ripple_material_teal">#ff149691</color>
 
-    <color name="blue">#304f9f</color>
+    <!--<color name="blue">#304f9f</color>-->
     <color name="grey">@color/material_blue_grey_800</color>
     <color name="light">@color/primary_material_light</color>
 
     <color name="colorPrimary">#ff595959</color>
     <color name="colorPrimaryDark">#ff595959</color>
-
+    <color name="blue">#55595959</color>
+    <color name="numbers_text_color">#CC595959</color>
+    <color name="done_text_color_normal">@color/colorPrimaryDark</color>
     <color name="windowBackgroundColor">#333333</color>
     <color name="black_translucent">#80000000</color>
 
