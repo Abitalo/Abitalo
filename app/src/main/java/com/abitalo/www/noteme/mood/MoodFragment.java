@@ -1,13 +1,16 @@
 package com.abitalo.www.noteme.mood;
 
-import android.support.v4.app.Fragment;
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
 import com.tekinarslan.material.FloatingActionButton;
 
@@ -38,9 +41,8 @@ public class MoodFragment extends Fragment{
 
     private void initMoodList(View view){
         listView = (ListView)view.findViewById(R.id.mood_list);
-//        listView.bringToFront();
         data = new ArrayList<Item_Mood>();
-        addData();
+        initDatabase();
         Collections.sort(data, new Comparator<Item_Mood>() {
             @Override
             public int compare(Item_Mood lhs, Item_Mood rhs) {
@@ -51,19 +53,14 @@ public class MoodFragment extends Fragment{
         listView.setAdapter(adapter);
     }
 
-    private void addData() {
-        Item_Mood date1 = new Item_Mood("20140710", "Hello world");
-        data.add(date1);
-        data.add(date1);
-        data.add(date1);
-        data.add(date1);
-        data.add(date1);
-        Item_Mood date2 = new Item_Mood("20151125", "This is a test");
-        data.add(date2);
-        Item_Mood date3 = new Item_Mood("20151126", "Bye");
-        data.add(date3);
-        Item_Mood date4 = new Item_Mood("20151124", "This is a very very long sentence to test the mood fragment item, and now end!");
-        data.add(date4);
+    private void initDatabase(){
+        Cursor cursor=Main.db.rawQuery("select DATE,MOOD from TMOOD where USERNAME='abitalo'",null);
+        if(null != cursor){
+            while(cursor.moveToNext()){
+                data.add(new Item_Mood(cursor.getLong(0),cursor.getString(1)));
+            }
+            cursor.close();
+        }
     }
 
     public void update(Item_Mood newItem) {
@@ -74,7 +71,14 @@ public class MoodFragment extends Fragment{
                 return rhs.getDate().compareTo(lhs.getDate());
             }
         });
+
         adapter.notifyDataSetChanged();
+        ContentValues values=new ContentValues();
+
+        values.put("DATE", newItem.getDate().getTimeInMillis());
+        values.put("MOOD", newItem.getText());
+        values.put("USERNAME","abitalo");
+        Main.db.insert("TMOOD", null, values);
     }
 
     @Override
@@ -89,7 +93,6 @@ public class MoodFragment extends Fragment{
             public void onClick(View v) {
                 MoodEditorDialog moodEditorDialog = new MoodEditorDialog();
                 moodEditorDialog.show(getFragmentManager(),getTag());
-
             }
         });
     }

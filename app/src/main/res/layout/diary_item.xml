@@ -63,10 +63,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="6dp"
-                    tools:text="2015-5-24:16:05"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:textColor="?android:textColorSecondary"
+                    android:textColor="#000"
                     android:textSize="@dimen/abc_text_size_caption_material"/>
 
         </LinearLayout>

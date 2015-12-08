@@ -1,19 +1,15 @@
 package com.abitalo.www.noteme.mood;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
-import com.abitalo.www.noteme.alarm.Clock;
-import com.abitalo.www.noteme.alarm.Item_Alarm;
 
 import java.util.List;
 
@@ -82,6 +78,7 @@ public class MoodListAdapter extends BaseAdapter {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                deleteFromDB(position);
                                 list.remove(position);
                                 notifyDataSetChanged();
                                 myDialog.dismiss();
@@ -104,6 +101,11 @@ public class MoodListAdapter extends BaseAdapter {
     public static class ViewHolder {
         TextView date;
         TextView content;
+    }
+
+    private void deleteFromDB(int position){
+        long timezone=((Item_Mood)list.get(position)).getDate().getTimeInMillis();
+        Main.db.delete("TMOOD","DATE=?",new String[]{String.valueOf(timezone)});
     }
 }
 

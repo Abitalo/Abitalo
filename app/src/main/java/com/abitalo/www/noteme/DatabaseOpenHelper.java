@@ -15,18 +15,15 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table if not exists author(_id integer primary key autoincrement,name text not null,stu_num bigint not null)");
+        db.execSQL("create table if not exists TUSER(_ID integer primary key autoincrement,USERNAME text not null unique,PASSWORD varchar(20) not null)");
+        db.execSQL("create table if not exists TALARM(_ID integer primary key autoincrement,USERNAME text not null,TIME bigint not null,EVENT text not null,FOREIGN KEY (USERNAME) REFERENCES TUSER(USERNAME))");
+        db.execSQL("create table if not exists TMOOD(_ID integer primary key autoincrement,USERNAME text not null,DATE bigint not null,MOOD text not null,FOREIGN KEY (USERNAME) REFERENCES TUSER(USERNAME))");
+        db.execSQL("create table if not exists TDIARY(_ID integer primary key autoincrement,USERNAME text not null,TITLE VARCHAR(100) not null,CONTENT VARCHAR(3000),DATE bigint not null,FOREIGN KEY (USERNAME) REFERENCES TUSER(USERNAME))");
         ContentValues values=new ContentValues();
 
-        values.put("name","冯超唯");
-        values.put("stu_num", 131320119);
-        db.insert("author", null, values);
-
-        values.clear();
-
-        values.put("name","陈佳");
-        values.put("stu_num", 131320120);
-        db.insert("author", null, values);
+        values.put("USERNAME","abitalo");
+        values.put("PASSWORD", "131320119");
+        db.insert("user", null, values);
     }
 
     @Override
