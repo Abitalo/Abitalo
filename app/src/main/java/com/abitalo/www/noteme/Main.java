@@ -22,6 +22,8 @@ import com.tekinarslan.material.SlidingTabLayout;
 
 public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.AlarmEventInputListener {//TODO : code optimization
 
+    public static SQLiteDatabase db;
+    public static String user;
     private AlarmFragment alarmFragment;
     private MoodFragment moodFragment;
     private DiaryFragment diaryFragment;
@@ -53,9 +55,9 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
     }
 
     private void initDatabase(){
-        DatabaseOpenHelper helper=new DatabaseOpenHelper(Main.this,"user.db");
-        SQLiteDatabase db=helper.getWritableDatabase();
-        Cursor cursor=db.rawQuery("select * from author", null);
+        DatabaseOpenHelper helper=new DatabaseOpenHelper(Main.this,"noteme.db");
+        db=helper.getWritableDatabase();
+        Cursor cursor=db.rawQuery("select * from tuser", null);
 
         if(null != cursor){
             String[] columnNames= cursor.getColumnNames();
@@ -66,8 +68,6 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
             }
             cursor.close();
         }
-        db.close();
-        helper.close();
     }
 
     @Override
@@ -127,5 +127,11 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
         public CharSequence getPageTitle(int position) {
             return titles[position];
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 }

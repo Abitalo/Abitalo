@@ -30,6 +30,12 @@ public class Item_Mood {
         this.text = text;
     }
 
+    public Item_Mood(long timezone,String text) {
+        date=Calendar.getInstance();
+        date.setTimeInMillis(timezone);
+        this.text=text;
+    }
+
     public String getDateString() {
         form=new SimpleDateFormat("yyyy-MM-dd");
         return form.format(date.getTime());
