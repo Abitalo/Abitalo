@@ -1,4 +1,4 @@
-﻿package com.abitalo.www.noteme.alarm;
+package com.abitalo.www.noteme.alarm;
 
 
 import android.app.AlarmManager;
@@ -47,7 +47,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
 
     private AlertDialog myDialog;
     private TimePickerDialog timePickerDialog;
-    private EventInputDialog eventInputDialog;
 
     private Clock clock;
     private Handler tickHandler ;

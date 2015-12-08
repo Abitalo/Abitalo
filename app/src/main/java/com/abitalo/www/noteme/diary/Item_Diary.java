@@ -21,6 +21,14 @@ public class Item_Diary {
         this.text=text;
         this.date=date;
     }
+
+    public Item_Diary(String title,String text,Long timezone){
+        this.title=title;
+        this.text=text;
+        date=Calendar.getInstance();
+        date.setTimeInMillis(timezone);
+    }
+
     public Item_Diary(String title,String text,String dateString) {//for use of test
         form=new SimpleDateFormat("yyyyMMdd");
 
@@ -35,8 +43,8 @@ public class Item_Diary {
         this.title = title;
     }
 
-    public String getDateString(){
-        long mills = Calendar.getInstance().getTimeInMillis()-date.getTimeInMillis();
+    public static String getDateString(long timezone){
+        long mills =Calendar.getInstance().getTimeInMillis()-timezone;
         if(mills < 60000)//less than 1 min
             return new String("Just now");
         else if(mills < 120000){//between 1 min and 2 mins
@@ -75,6 +83,10 @@ public class Item_Diary {
             sb.append(" days ago");
             return new String(sb);
         }
+    }
+
+    public String getDateString(){
+        return getDateString(date.getTimeInMillis());
     }
 
     public String getTitle() {

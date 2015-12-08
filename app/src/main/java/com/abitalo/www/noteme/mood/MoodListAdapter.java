@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
+import com.abitalo.www.noteme.Varible;
 
 import java.util.List;
 
@@ -105,7 +105,7 @@ public class MoodListAdapter extends BaseAdapter {
 
     private void deleteFromDB(int position){
         long timezone=((Item_Mood)list.get(position)).getDate().getTimeInMillis();
-        Main.db.delete("TMOOD","DATE=?",new String[]{String.valueOf(timezone)});
+        Varible.db.delete("TMOOD","DATE=?",new String[]{String.valueOf(timezone)});
     }
 }
 

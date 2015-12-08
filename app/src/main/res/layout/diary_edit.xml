@@ -42,7 +42,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/btn_mood" />
+                        android:background="@drawable/btn_mood" />
 
                 </RelativeLayout>
 
@@ -50,6 +50,7 @@
                     android:id="@+id/diary_edit_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
                     />
                 <ImageView
                     android:layout_width="match_parent"
@@ -65,6 +66,7 @@
                     android:id="@+id/diary_edit_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
                     />
                 <TextView
                     android:id="@+id/opr_time_line_text"
@@ -74,9 +76,7 @@
                     android:textColor="@color/grey"
                     android:gravity="end"
                     android:textSize="@dimen/abc_text_size_small_material"
-                    android:lineSpacingExtra="4dp"
-                    android:layout_gravity="right"
-                    tool:text="015-5-25:14:01" />
+                    android:layout_gravity="right"/>
 
             </LinearLayout>
         </ScrollView>

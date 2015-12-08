@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.abitalo.www.noteme.Main;
 import com.abitalo.www.noteme.R;
+import com.abitalo.www.noteme.Varible;
 import com.tekinarslan.material.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class MoodFragment extends Fragment{
     }
 
     private void initDatabase(){
-        Cursor cursor=Main.db.rawQuery("select DATE,MOOD from TMOOD where USERNAME='abitalo'",null);
+        Cursor cursor= Varible.db.rawQuery("select DATE,MOOD from TMOOD where USERNAME='abitalo'",null);
         if(null != cursor){
             while(cursor.moveToNext()){
                 data.add(new Item_Mood(cursor.getLong(0),cursor.getString(1)));
@@ -64,6 +64,7 @@ public class MoodFragment extends Fragment{
     }
 
     public void update(Item_Mood newItem) {
+        //update the view
         data.add(newItem);
         Collections.sort(data, new Comparator<Item_Mood>() {
             @Override
@@ -71,14 +72,15 @@ public class MoodFragment extends Fragment{
                 return rhs.getDate().compareTo(lhs.getDate());
             }
         });
-
         adapter.notifyDataSetChanged();
+
+        //update the database
         ContentValues values=new ContentValues();
 
         values.put("DATE", newItem.getDate().getTimeInMillis());
         values.put("MOOD", newItem.getText());
         values.put("USERNAME","abitalo");
-        Main.db.insert("TMOOD", null, values);
+        Varible.db.insert("TMOOD", null, values);
     }
 
     @Override
