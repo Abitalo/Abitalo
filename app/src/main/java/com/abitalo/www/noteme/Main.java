@@ -1,7 +1,6 @@
 package com.abitalo.www.noteme;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,17 +13,14 @@ import android.util.Log;
 import com.abitalo.www.noteme.alarm.AlarmFragment;
 import com.abitalo.www.noteme.alarm.EventInputDialog;
 import com.abitalo.www.noteme.alarm.Item_Alarm;
-import com.abitalo.www.noteme.diary.DiaryDeletionDialog;
 import com.abitalo.www.noteme.diary.DiaryFragment;
 import com.abitalo.www.noteme.mood.Item_Mood;
 import com.abitalo.www.noteme.mood.MoodEditorDialog;
 import com.abitalo.www.noteme.mood.MoodFragment;
 import com.tekinarslan.material.SlidingTabLayout;
 
-public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.AlarmEventInputListener,DiaryDeletionDialog.DiaryDeleteListener {//TODO : code optimization
+public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEditListener,EventInputDialog.AlarmEventInputListener {//TODO : code optimization
 
-    public static SQLiteDatabase db;
-    public static String user;
     private AlarmFragment alarmFragment;
     private MoodFragment moodFragment;
     private DiaryFragment diaryFragment;
@@ -57,8 +53,8 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
 
     private void initDatabase(){
         DatabaseOpenHelper helper=new DatabaseOpenHelper(Main.this,"noteme.db");
-        db=helper.getWritableDatabase();
-        Cursor cursor=db.rawQuery("select * from tuser", null);
+        Varible.db=helper.getWritableDatabase();
+        Cursor cursor= Varible.db.rawQuery("select * from tuser", null);
 
         if(null != cursor){
             String[] columnNames= cursor.getColumnNames();
@@ -81,12 +77,6 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
     public void EventInputComplete(Item_Alarm newItem) {
         if(null != alarmFragment)
             alarmFragment.addEvent(newItem);
-    }
-
-    @Override
-    public void deleteItem(int position) {
-        if(null !=diaryFragment)
-            diaryFragment.deleteItem(position);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -139,6 +129,6 @@ public class Main extends ActionBarActivity implements MoodEditorDialog.MoodEdit
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        db.close();
+        Varible.db.close();
     }
 }
