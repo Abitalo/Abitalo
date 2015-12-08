@@ -1,10 +1,16 @@
 package com.abitalo.www.noteme.alarm;
+
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +34,9 @@ import java.util.Comparator;
  * Created by Lancelot on 2015/9/27.
  */
 public class AlarmFragment extends Fragment implements View.OnClickListener , EventInputDialog.AlarmEventInputListener {
-    public static final String TIMEPICKER_TAG = "timepicker";
+    private View view;
+
+    private static final String TIMEPICKER_TAG = "timepicker";
     private FloatingActionButton add_btn;
     private ImageButton left;
     private ImageButton right;
@@ -36,19 +44,24 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
     private TextView eventContent;
     private TextView eventTime;
 
-    public Clock clock;
+    private AlertDialog myDialog;
+    private TimePickerDialog timePickerDialog;
+    private EventInputDialog eventInputDialog;
+
+    private Clock clock;
+    private Handler tickHandler ;
+
     private ArrayList<Item_Alarm> data;
-    private View view;
+
     //当前显示的item
     private Item_Alarm currentItem;
     //当数据为0时，显示的提醒item
     private Item_Alarm initItem;
-    private Handler tickHandler ;
     private boolean hasData;
+
     private FragmentManager fragmentManager;
-    AlertDialog myDialog;
-    TimePickerDialog timePickerDialog;
-    EventInputDialog eventInputDialog;
+    private AlarmManager am;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +78,7 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
                 }
             }
         };
-//        Log.v("logcat","zela Create" );
-        //设置提醒item
+        am= (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
         initItem = new Item_Alarm("00:00","做个计划吧！");
     }
 
@@ -165,9 +177,8 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
         dial.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                //Toast.makeText(getActivity(), "OnLongClickListener事件", Toast.LENGTH_SHORT).show();
                 if (!hasData)
-                    return  true;
+                    return true;
                 myDialog = new AlertDialog.Builder(getActivity()).create();
                 myDialog.show();
                 myDialog.getWindow().setContentView(R.layout.alarm_dialog);
@@ -282,9 +293,18 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
     }
 
     public void addEvent(Item_Alarm newItem) {
-//        if(null == data) Log.v("logcat","data is null");
+        Log.i("Info",newItem.getSatrtTimeString());
         data.add(newItem);
+        pendAlarm(newItem.getStartTime(), newItem.getText());
         changeButtonState();
+    }
+
+    public void pendAlarm(Calendar alarmTime,String note){
+        Intent i=new Intent();
+        i.putExtra("note",note);
+        PendingIntent pi=PendingIntent.getBroadcast(getActivity(),0,i,0);
+        am.set(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ (10 * 1000), (24 * 60 * 60 * 1000), pi);
     }
 
     @Override
@@ -316,7 +336,6 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
                 timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-//                        Toast.makeText(getActivity(), "new time:" + hourOfDay + "-" + minute, Toast.LENGTH_LONG).show();
                         EventInputDialog eventInputDialog = new EventInputDialog();
                         Bundle args = new Bundle();
                         args.putInt("hour",hourOfDay);
