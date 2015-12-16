@@ -269,10 +269,10 @@ public class AlarmFragment extends Fragment implements View.OnClickListener , Ev
         int minute = calendar.get(Calendar.MINUTE);
         String currentTime = String.format("%02d",hour) + ":" + String.format("%02d",minute);
         if(null == currentTime || !hasData || data.size()==0){
-            eventTime.setText("开始时间：" + initItem.getSatrtTimeString()+"\n当前时间："+currentTime+"\n");
+            eventTime.setText("开始时间：" + initItem.getSatrtTimeString()/*+"\n当前时间："+currentTime*/+"\n");
         }
         else {
-            eventTime.setText("开始时间：" + itemAlarm.getSatrtTimeString() + "\n当前时间：" + currentTime + "\n");
+            eventTime.setText("开始时间：" + itemAlarm.getSatrtTimeString()/* + "\n当前时间：" + currentTime */+ "\n");
         }
     }
 

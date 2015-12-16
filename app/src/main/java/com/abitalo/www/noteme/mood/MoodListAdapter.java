@@ -21,9 +21,10 @@ import java.util.List;
  */
 public class MoodListAdapter extends BaseAdapter {
     private Context context;
+    private ViewHolder holder;
+
     private List<Item_Mood> list;
     private AlertDialog myDialog;
-    private ViewHolder holder;
     //    private Activity parentActivity;
     public MoodListAdapter(Context context, List<Item_Mood> list) {
         this.context = context;
@@ -98,14 +99,15 @@ public class MoodListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public static class ViewHolder {
-        TextView date;
-        TextView content;
-    }
+
 
     private void deleteFromDB(int position){
         long timezone=((Item_Mood)list.get(position)).getDate().getTimeInMillis();
-        Varible.db.delete("TMOOD","DATE=?",new String[]{String.valueOf(timezone)});
+        Varible.db.delete("TMOOD","DATE=? and USERNAME=?",new String[]{String.valueOf(timezone),"abitalo"});
+    }
+    public static class ViewHolder {
+        TextView date;
+        TextView content;
     }
 }
 
