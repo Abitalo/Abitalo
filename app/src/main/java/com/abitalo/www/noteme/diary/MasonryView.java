@@ -36,22 +36,22 @@ public class MasonryView extends  RecyclerView.ViewHolder implements OnClickList
     @Override
     public void onClick(View v) {
         if(mClickListener != null){
-            mClickListener.onClick(v, getPosition());
+            mClickListener.onItemClick(v, getPosition());
         }
     }
 
     @Override
     public boolean onLongClick(View v) {
         if (mLongClickListener != null) {
-            mLongClickListener.onLongClick(v, getPosition());
+            mLongClickListener.onItemLongClick(v, getPosition());
         }
         return true;
     }
 
     public interface OnItemClickListener{
-        void onClick(View v,int position);
+        void onItemClick(View v, int position);
     }
     public interface OnItemLongClickListener{
-        void onLongClick(View v,int position);
+        void onItemLongClick(View v, int position);
     }
 }

@@ -22,9 +22,10 @@ import java.util.List;
 
 /**
  * Created by Lancelot on 2015/9/27.
- * Container for diary function
+ * Container of all diary-function related
  */
 public class DiaryFragment extends Fragment implements MasonryView.OnItemClickListener,MasonryView.OnItemLongClickListener{
+    //View of the whole fragment
     private View view;
     //RecyclerView for implements Masonry Style of diaries.
     private RecyclerView recyclerView;
@@ -34,8 +35,8 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
     private MasonryAdapter adapter;
     //Button to write a new diary
     private FloatingActionButton add_btn;
+    //Dialog to warning when you deleting a item
     private AlertDialog myDialog;
-    private int pos;
 
     //Request code for start a edit activity
     //carry the message of item's position ,so i made it no-final
@@ -48,6 +49,7 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
 
     //Result code for pressed submit button in @com.abitalo.www.noteme.diary.DiaryEditActivity
     private static final int RESULT_OK =0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_diary, container, false);
@@ -56,6 +58,7 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
         return view;
     }
 
+    //set the listener on "add button"
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -72,12 +75,52 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
         });
     }
 
+    //Instant update when work done in DiaryEditActivity.
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (RESULT_OK == resultCode){                       //Receive a Result Code from DiaryEditActivity
+            //fetch the args
+            Bundle args = data.getBundleExtra("args");
+            String title=args.getString("title");
+            String content=args.getString("content");
+            Long date=args.getLong("date");
+            if(DIARY_EDIT_REQUEST == requestCode){      //after edit action
+                //update the view
+                this.data.get(DIARY_EDIT_REQUEST).setTitle(title);
+                this.data.get(DIARY_EDIT_REQUEST).setText(content);
+                adapter.notifyDataSetChanged();
+
+                //update the database
+                ContentValues values=new ContentValues();
+                values.put("TITLE",title);
+                values.put("CONTENT",content);
+                Varible.db.update("TDIARY",values,"DATE=?",new String[]{String.valueOf(date)});
+            }
+            else if(DIARY_CREATE_REQUEST == requestCode){//after create action
+                //update the view
+                this.data.add(new Item_Diary(title, content, date));
+                adapter.notifyDataSetChanged();
+
+                //update the database
+                ContentValues values=new ContentValues();
+                values.put("TITLE",title);
+                values.put("CONTENT",content);
+                values.put("DATE",date);
+                values.put("USERNAME","abitalo");
+                Varible.db.insert("TDIARY", null, values);
+            }
+        }
+    }
+
+    //do the initialize work
     private void init(){
         data=new ArrayList<Item_Diary>();
         initDatabase();
         initRecyclerView();
     }
 
+    //init database:
+    //read data from database to fill the adapter
     public void initDatabase(){
         Cursor cursor= Varible.db.rawQuery("select TITLE,CONTENT,DATE from TDIARY where USERNAME='abitalo'",null);
         if(null != cursor){
@@ -88,6 +131,8 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
         }
     }
 
+    //init recyclerview:
+    //set the adapter,style,animation and register the item listener
     private void initRecyclerView(){
         recyclerView=(RecyclerView)view.findViewById(R.id.diary_recycler);
         adapter=new MasonryAdapter(data);
@@ -97,22 +142,21 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter.setOnItemClickListener(this);
         adapter.setOnItemLongClickListener(this);
-        //TODO setOnItemClickListener
-
     }
 
+    //start a activity based on data[position] ,to edit the data
     @Override
-    public void onClick(View v, int position) {
+    public void onItemClick(View v, int position) {
         DIARY_EDIT_REQUEST=position;
         Intent intent = new Intent();
         intent.setClass(getActivity(), DiaryEditActivity.class);
-        intent.putExtra("timezone",data.get(position).getDate().getTimeInMillis());
+        intent.putExtra("timezone", data.get(position).getDate().getTimeInMillis());
         startActivityForResult(intent, DIARY_EDIT_REQUEST);
     }
 
+    //start a dialog to warn if you want to delete this item
     @Override
-    public void onLongClick(View v, int position) {
-        pos=position;
+    public void onItemLongClick(View v, final int position) {
         myDialog = new AlertDialog.Builder(getActivity()).create();
         myDialog.show();
         myDialog.getWindow().setContentView(R.layout.diary_delete_dialog);
@@ -121,7 +165,7 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteItem(pos);
+                        deleteItem(position);
                         myDialog.dismiss();
                     }
                 });
@@ -135,46 +179,16 @@ public class DiaryFragment extends Fragment implements MasonryView.OnItemClickLi
                 });
     }
 
+    //delete item based on data[position] from view and database
     public void deleteItem(int position){
+        long timezone=data.get(position).getDate().getTimeInMillis();
+
+        //delete from view
         data.remove(position);
         adapter.notifyItemRemoved(position);
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-        if (RESULT_OK == resultCode){                       //edit activity finished
-            //fetch the args
-            Bundle args = data.getBundleExtra("args");
-            String title=args.getString("title");
-            String content=args.getString("content");
-            Long date=args.getLong("date");
-                if(DIARY_EDIT_REQUEST == requestCode){      //after edit action
-                    //update the view
-                    this.data.get(DIARY_EDIT_REQUEST).setTitle(title);
-                    this.data.get(DIARY_EDIT_REQUEST).setText(content);
-                    adapter.notifyDataSetChanged();
-
-                    //update the database
-                    ContentValues values=new ContentValues();
-                    values.put("TITLE",title);
-                    values.put("CONTENT",content);
-                    Varible.db.update("TDIARY",values,"DATE=?",new String[]{String.valueOf(date)});
-                }
-                else if(DIARY_CREATE_REQUEST == requestCode){
-                    //update the view
-                    this.data.add(new Item_Diary(title, content, date));
-                    adapter.notifyDataSetChanged();
-
-                    //update the database
-                    ContentValues values=new ContentValues();
-                    values.put("TITLE",title);
-                    values.put("CONTENT",content);
-                    values.put("DATE",date);
-                    values.put("USERNAME","abitalo");
-                    Varible.db.insert("TDIARY", null, values);
-                }
-        }
+        //delete from database
+        Varible.db.delete("TDIARY","DATE=? and USERNAME=?",new String[]{String.valueOf(timezone),"abitalo"});
     }
 }
 
