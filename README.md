@@ -21,8 +21,8 @@ NoteMe
 
 #Dependencies
 
-* [AndroidMaterialDesignToolbar][androidMaterialDesignToolbar] (from tekinarslan)
-* [Datetimepicker][datetimepicker] (from flavienlaurent)
+* [AndroidMaterialDesignToolbar][androidMaterialDesignToolbar] (https://github.com/tekinarslan/AndroidMaterialDesignToolbar)
+* [Datetimepicker][datetimepicker] (https://github.com/flavienlaurent/datetimepicker)
 
 #Credits
 
