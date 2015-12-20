@@ -9,15 +9,15 @@ NoteMe
 
 #Sample  
 ##Alarm(Manage the schedule)  
-![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-00-47.png)  
-![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-00-33.png)  
-![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-00-39.png)  
+![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-00-47.png-gitstyle)  
+![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-00-33.png-gitstyle)  
+![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-00-39.png-gitstyle)  
 ##Mood (Feeling of the day)  
-![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-20-59-28.png)  
-![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-01-12.png)  
+![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-20-59-28.png-gitstyle)  
+![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-01-12.png-gitstyle)  
 ##Diary(Write things down)
-![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-20-59-33.png)  
-![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-02-17.png)  
+![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-20-59-33.png-gitstyle)  
+![image](http://7xkp3n.com1.z0.glb.clouddn.com/Screenshot_2015-12-15-21-02-17.png-gitstyle)  
 
 #Dependencies
 
